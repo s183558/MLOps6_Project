@@ -11,7 +11,7 @@ The primary objective of this project is to analyze a collection of tweets and e
 Our implementation leverages the Hugging Face transformer encoder for Natural Language Processing (NLP).
 
 ## Data for the model
-We have utilized data from a Kaggle competition available at this https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. Due to restrictions on accessing the labels of the provided test set, we have partitioned the training set for both training and validation purposes.
+We have utilized data from a Kaggle competition available at: https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. Due to restrictions on accessing the labels of the provided test set, we have partitioned the training set for both training, validation and test purposes.
 
 ## Project Model
 
