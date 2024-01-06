@@ -1,0 +1,3 @@
+defaults:
+    - data: it1
+    - model: default

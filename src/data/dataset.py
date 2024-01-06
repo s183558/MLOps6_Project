@@ -68,11 +68,9 @@ class LitDM(lit.LightningDataModule):
         self.validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
         self.validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
 
-
     def train_dataloader(self) -> DataLoader:
         return DataLoader(self.train_data, batch_size=self.batch_size, num_workers=self.cpu_cnt)
         
-
     def test_dataloader(self) -> DataLoader:
         pass
 

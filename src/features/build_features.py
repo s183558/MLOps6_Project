@@ -4,6 +4,7 @@ from transformers import AutoTokenizer, BertTokenizer
 from sklearn.model_selection import train_test_split
 import numpy as np 
 import pandas as pd 
+from hydra import compose, initialize
 from src.data.dataset import DisasterTweets
 
 # TODO: handle logging correctly
@@ -14,13 +15,9 @@ logging.basicConfig(level=logging.INFO,
 logger=logging.getLogger(__name__)
 
 def main():
-    # TODO: MOVE THIS CONFIG!
-    # Split test, train
-    test_size = 0.2
-    # seed
-    random_state = 42
-    # Set the maximum sequence length for padding
-    MAX_LEN = 128
+    # load configuration
+    with initialize(config_path='../../conf', version_base="1.1"):
+        cfg: dict = compose(config_name='config.yaml')
 
     # load dataset
     ds = DisasterTweets()
@@ -45,7 +42,7 @@ def main():
         encoded_sent = tokenizer.encode(
                             sent,                      # Sentence to encode.
                             add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-                            max_length = MAX_LEN,          # Truncate all sentences.
+                            max_length = cfg.data["token_max_length"],          # Truncate all sentences.
                             truncation =False
                             #return_tensors = 'pt',     # Return pytorch tensors.
                     )
@@ -59,7 +56,7 @@ def main():
 
     # Pad our input tokens with value 0 (trailing).
     for tweet in input_ids:
-        no_pads = MAX_LEN - len(tweet)  # Number of pads to add to the tweet
+        no_pads = cfg.data["token_max_length"] - len(tweet)  # Number of pads to add to the tweet
         pad_list = no_pads * [0]
         tweet += pad_list
 
@@ -78,10 +75,10 @@ def main():
 
     # Split into train, val
     train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
-                                                                random_state=random_state, test_size=test_size)
+                                                                random_state=cfg.data["seed"], test_size=cfg.data["validation_fraction"])
     # Do the same for the masks.
     train_masks, validation_masks, _, _ = train_test_split(attention_masks, labels,
-                                                random_state=random_state, test_size=test_size)
+                                                random_state=cfg.data["seed"], test_size=cfg.data["validation_fraction"])
 
     # to tensors
     train_inputs = torch.tensor(train_inputs)

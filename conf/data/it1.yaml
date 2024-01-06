@@ -1,0 +1,3 @@
+validation_fraction: 0.2
+seed: 42
+token_max_length: 128
