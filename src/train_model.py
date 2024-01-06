@@ -14,3 +14,5 @@ if __name__ == '__main__':
 
     train_dataloader = dm.train_dataloader()
     validation_dataloader = dm.val_dataloader()
+
+    print(type(train_dataloader))
