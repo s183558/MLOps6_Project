@@ -2,6 +2,22 @@
 
 Mlops Project of Transformer model for tweets classification
 
+## Goal for the project
+
+The goal of the project is to take look at a bunch of tweets, and then let a NLP model figure out if the tweet is about a real disaster or not (binary).
+
+## Framework to use
+
+We are using Hugginface encoder something something
+
+## Data for the model
+
+The data used to train and validate our model is data from a Kaggle competition: https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. As we cannot get access to the labels of the test set provided, we will partician the training set into a training set aswell. 
+
+## Model of the project
+
+We plan on using a NLP model
+
 ## Project structure
 
 The directory structure of the project looks like this:
