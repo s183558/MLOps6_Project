@@ -11,10 +11,10 @@ from torch.utils.data import DataLoader
 from torch.utils.data.dataset import Dataset
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
-
-logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        datefmt='%m-%d %H:%M')
+#import src.common.log_config
+#logging.basicConfig(level=logging.INFO,
+#                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+#                        datefmt='%m-%d %H:%M')
 
 logger=logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ class DisasterTweets():
         
     def process_datasets(self):
         self.train = processing(self.train)
-        self.train['target'] = np.float64(self.train['target'])
+        self.train['target'] = np.int64(self.train['target'])
         self.test = processing(self.test)
 
 class LitDM(lit.LightningDataModule):
@@ -66,7 +66,7 @@ class LitDM(lit.LightningDataModule):
      
         self.train_data = TensorDataset(train_inputs, train_masks, train_labels)
         self.validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
-        self.validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
+
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(self.train_data, batch_size=self.batch_size, num_workers=self.cpu_cnt)
