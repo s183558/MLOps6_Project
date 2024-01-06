@@ -1,0 +1,2 @@
+from mlops6_project_source.models.model import MyNeuralNet
+from mlops6_project_source.predict_model import predict
