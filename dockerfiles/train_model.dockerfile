@@ -10,9 +10,11 @@ COPY pyproject.toml pyproject.toml
 COPY src/ src/
 COPY data/ data/
 COPY models/ models/
+COPY conf/ conf/
 
 WORKDIR /
 RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
+RUN pip install -e .
 
 ENTRYPOINT ["python", "-u", "src/train_model.py"]

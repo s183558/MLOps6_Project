@@ -185,3 +185,6 @@ test_python_shit.py
 
 # Models
 models/*
+
+# Ruff
+/.ruff_cache
