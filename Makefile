@@ -40,6 +40,10 @@ clean:
 data:
 	python $(PROJECT_NAME)/data/make_dataset.py
 
+## Process raw data into processed data
+features:
+	python $(PROJECT_NAME)/features/build_features.py
+
 #################################################################################
 # Documentation RULES                                                           #
 #################################################################################
