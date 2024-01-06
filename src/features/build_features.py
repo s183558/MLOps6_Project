@@ -7,11 +7,9 @@ import pandas as pd
 from hydra import compose, initialize
 from src.data.dataset import DisasterTweets
 
-# TODO: handle logging correctly
-logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        datefmt='%m-%d %H:%M')
+#import src.common.log_config
 
+#logging.config.dictConfig(logging_config)
 logger=logging.getLogger(__name__)
 
 def main():

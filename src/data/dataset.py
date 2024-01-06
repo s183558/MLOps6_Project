@@ -11,10 +11,10 @@ from torch.utils.data import DataLoader
 from torch.utils.data.dataset import Dataset
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
-
-logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                        datefmt='%m-%d %H:%M')
+#import src.common.log_config
+#logging.basicConfig(level=logging.INFO,
+#                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+#                        datefmt='%m-%d %H:%M')
 
 logger=logging.getLogger(__name__)
 

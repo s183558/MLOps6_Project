@@ -5,8 +5,12 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/train_model.dockerfile
+    volumes:      
+      - ./models:/models
   predict:
     image: predict:latest
     build:
       context: .
       dockerfile: dockerfiles/predict_model.dockerfile
+    volumes:      
+      - ./models:/models
