@@ -1,4 +1,4 @@
-# mlops6_project_source
+# DTU - MLOps (group 6) 
 
 This repository, mlops6_project_source, is dedicated to an MLOps project at DTU focused on implementing a Transformer model for the classification of tweets.
 
@@ -25,7 +25,7 @@ We have utilized data from a Kaggle competition available at: https://www.kaggle
 
 ## What models do you expect to use
 
-Our approach involves implementing a NLP model for tweet classification. The Hugging Face transformer model serves as the foundation for this purpose.
+We expect to utilize one or more pretrained models based on transformer architecture to fine-tune for our purposes. Our initial experiments are based on a pretrained base BERT classifier (available at https://huggingface.co/). 
 
 ## Project structure
 
