@@ -35,10 +35,9 @@ class DisasterTweets():
         self.process_datasets()
 
     def load_raw(self):
-        self.train = pd.read_csv(f'{self.data_path}train.csv')
-        
+        self.train = pd.read_csv(f'{self.data_path}train.csv')       
         logger.info(f'train columns: {self.train.columns.tolist()}')
-        logger.info(f'train dataset length: {len(self.train)}, test dataset length: {len(self.test)}')
+        logger.info(f'train dataset length: {len(self.train)}')
         
     def process_datasets(self):
         self.train = processing(self.train)
