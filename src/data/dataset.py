@@ -2,12 +2,14 @@ import logging
 import pandas as pd
 import os
 from typing import Optional
+import numpy as np
 
 import pytorch_lightning as lit
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.data.dataset import Dataset
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+
 
 logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
