@@ -2,20 +2,26 @@
 
 This repository, mlops6_project_source, is dedicated to an MLOps project at DTU focused on implementing a Transformer model for the classification of tweets.
 
-## Goal for the project
+Group 6:
+Andreas Tillarch s??????
+Enrique s??????
+Spyridon Pikoulas s??????
+Frederik Erichs s183558
+
+## Overall goal of the project
 
 The primary objective of this project is to analyze a collection of tweets and employ a Natural Language Model (NLM) for binary classification. The aim is to determine whether a given tweet pertains to a real disaster or not.
 
-## Framework Utilized
+## What framework are you going to use and you do you intend to include the framework into your project?
 
 Our implementation leverages the Hugging Face transformer encoder for Natural Language Processing (NLP).
 
-## Data for the model
-We have utilized data from a Kaggle competition available at: https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. Due to restrictions on accessing the labels of the provided test set, we have partitioned the training set for both training, validation and test purposes.
+## What data are you going to run on (initially, may change)
+We have utilized data from a Kaggle competition available at: https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. The dataset consist of 5 columns. An "id" and the "text" of the tweet, the "location" from where the tweet was send, a "keyword" from the tweet, aswell as the "target" wich denotes if the tweet is about a real disaster (1) or not (0). As our model aims to be as simple as possible, we will only train on the "text" and "target" part of the data. Due to restrictions on accessing the labels of the provided test set, we have partitioned the training set for both training, validation and test purposes.
 
-## Project Model
+## What models do you expect to use
 
-Our approach involves implementing a state-of-the-art NLP model for tweet classification. The Hugging Face transformer model serves as the foundation for this purpose.
+Our approach involves implementing a NLP model for tweet classification. The Hugging Face transformer model serves as the foundation for this purpose.
 
 ## Project structure
 
