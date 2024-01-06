@@ -3,7 +3,7 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mlops6_project_source"
+name = "src"
 version = "0.0.1"
 description = "Mlops Project of Transformer model for tweets classification"
 authors = [
@@ -15,7 +15,7 @@ requires-python = ">=3.10"
 dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools]
-packages = ["mlops6_project_source"]
+packages = ["src"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}

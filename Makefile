@@ -4,7 +4,7 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = mlops6_project_source
+PROJECT_NAME = src
 PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
