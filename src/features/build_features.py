@@ -13,7 +13,6 @@ logging.basicConfig(level=logging.INFO,
 
 logger=logging.getLogger(__name__)
 
-
 def main():
     # TODO: MOVE THIS CONFIG!
     # Split test, train
@@ -50,14 +49,13 @@ def main():
                             truncation =False
                             #return_tensors = 'pt',     # Return pytorch tensors.
                     )
-        
         # Add the encoded sentence to the list.
         input_ids.append(encoded_sent)
 
     # Print sentence 0, now as a list of IDs.
-    logger.info('Original: ', sentences[0])
-    logger.info('Token IDs:', input_ids[0])
-    logger.info('Max sentence length: ', max([len(sen) for sen in input_ids]))
+    logger.info(f'Original: {sentences[0]}')
+    logger.info(f'Token IDs: {input_ids[0]}')
+    logger.info(f'Max sentence length: {max([len(sen) for sen in input_ids])}')
 
     # Pad our input tokens with value 0 (trailing).
     for tweet in input_ids:
@@ -70,7 +68,6 @@ def main():
 
     # For each sentence...
     for sent in input_ids:
-
         # Create the attention mask.
         #   - If a token ID is 0, then it's padding, set the mask to 0.
         #   - If a token ID is > 0, then it's a real token, set the mask to 1.

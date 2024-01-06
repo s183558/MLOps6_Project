@@ -1,5 +1,6 @@
 import logging
 import pandas as pd
+import numpy as np
 import os
 from typing import Optional
 
@@ -20,10 +21,9 @@ def processing(df):
     df['input'] = 'KEYWORD: ' + df.keyword + '; LOCATION: ' + df.location + '; TEXT: ' + df.text
     df['input'] = df['input'].str.lower()
     df = df.drop(columns=['keyword','location','text'], axis=1)
-    df.fillna("No info", inplace=True)
+    df.fillna("no info", inplace=True)
     df.drop_duplicates(inplace=True)
     return df
-
 
 class DisasterTweets():
     def __init__(self):
@@ -44,8 +44,6 @@ class DisasterTweets():
         self.train['target'] = np.float64(self.train['target'])
         self.test = processing(self.test)
 
-
-
 class LitDM(lit.LightningDataModule):
     def __init__(self, data_path: str='data/processed', batch_size: int = 32):
         super().__init__()
@@ -55,7 +53,6 @@ class LitDM(lit.LightningDataModule):
         self.cpu_cnt = os.cpu_count() or 2
 
     def setup(self, stage: Optional[str] = None) -> None:
-        
         train_inputs = torch.load('data/processed/train_inputs.pt')
         validation_inputs= torch.load('data/processed/validation_inputs.pt')
 
