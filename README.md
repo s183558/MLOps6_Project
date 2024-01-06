@@ -1,22 +1,21 @@
 # mlops6_project_source
 
-Mlops Project of Transformer model for tweets classification
+This repository, mlops6_project_source, is dedicated to an MLOps project at DTU focused on implementing a Transformer model for the classification of tweets.
 
 ## Goal for the project
 
-The goal of the project is to take look at a bunch of tweets, and then let a NLP model figure out if the tweet is about a real disaster or not (binary).
+The primary objective of this project is to analyze a collection of tweets and employ a Natural Language Model (NLM) for binary classification. The aim is to determine whether a given tweet pertains to a real disaster or not.
 
-## Framework to use
+## Framework Utilized
 
-We are using Hugginface encoder something something
+Our implementation leverages the Hugging Face transformer encoder for Natural Language Processing (NLP).
 
 ## Data for the model
+We have utilized data from a Kaggle competition available at this https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. Due to restrictions on accessing the labels of the provided test set, we have partitioned the training set for both training and validation purposes.
 
-The data used to train and validate our model is data from a Kaggle competition: https://www.kaggle.com/competitions/nlp-getting-started/data?select=test.csv. As we cannot get access to the labels of the test set provided, we will partician the training set into a training set aswell. 
+## Project Model
 
-## Model of the project
-
-We plan on using a NLP model
+Our approach involves implementing a state-of-the-art NLP model for tweet classification. The Hugging Face transformer model serves as the foundation for this purpose.
 
 ## Project structure
 
