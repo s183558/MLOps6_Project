@@ -5,7 +5,7 @@ pandas >= 2.1.4
 transformers >= 4.36.2 #hugginface
 numpy >= 1.26.3
 scikit-learn >= 1.3.2
-
-
-
+dcv >= 3.38.1
+dcv-gdrive >= 3.0.1
+hydra-core >= 1.3.2
 
