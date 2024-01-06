@@ -2,6 +2,7 @@ import logging
 import pandas as pd
 import os
 from typing import Optional
+import numpy as np
 
 import pytorch_lightning as lit
 import torch
@@ -27,22 +28,20 @@ def processing(df):
 
 class DisasterTweets():
     def __init__(self):
-        self.data_path  = "data/raw/"
+        project_directory = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        self.data_path  = f"{project_directory}/data/raw/"
         self.load_raw()
         self.process_datasets()
 
     def load_raw(self):
         self.train = pd.read_csv(f'{self.data_path}train.csv')
-        self.test = pd.read_csv(f'{self.data_path}test.csv')
         
         logger.info(f'train columns: {self.train.columns.tolist()}')
-        logger.info(f'test columns: {self.test.columns.tolist()}')
         logger.info(f'train dataset length: {len(self.train)}, test dataset length: {len(self.test)}')
         
     def process_datasets(self):
         self.train = processing(self.train)
         self.train['target'] = np.float64(self.train['target'])
-        self.test = processing(self.test)
 
 
 
