@@ -1,15 +1,12 @@
 import logging
-
 import torch
 from transformers import AutoTokenizer, BertTokenizer
-
 from sklearn.model_selection import train_test_split
-
 import numpy as np 
 import pandas as pd 
+from src.data.dataset import DisasterTweets
 
-from src.data.make_dataset import DisasterTweets
-
+# TODO: handle logging correctly
 logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                         datefmt='%m-%d %H:%M')
@@ -18,7 +15,6 @@ logger=logging.getLogger(__name__)
 
 
 def main():
-
     # TODO: MOVE THIS CONFIG!
     # Split test, train
     test_size = 0.2
