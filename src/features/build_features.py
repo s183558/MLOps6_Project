@@ -1,9 +1,7 @@
 import logging
 import torch
-from transformers import AutoTokenizer, BertTokenizer
+from transformers import BertTokenizer
 from sklearn.model_selection import train_test_split
-import numpy as np 
-import pandas as pd 
 from hydra import compose, initialize
 from src.data.dataset import DisasterTweets
 
