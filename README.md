@@ -2,11 +2,15 @@
 
 This repository, mlops6_project_source, is dedicated to an MLOps project at DTU focused on implementing a Transformer model for the classification of tweets.
 
-Group 6:
-Andreas Tillarch s??????
-Enrique s??????
-Spyridon Pikoulas s??????
-Frederik Erichs s183558
+Group 6:  
+
+| Name | Student ID |
+|:-|-:|
+| Andreas Millarch | s135313 |
+| Enrique Vidal | s151988 |
+| Spyridon Pikoulas | s230284 |  
+| Frederik Erichs | s183558 |
+
 
 ## Overall goal of the project
 
