@@ -1,15 +1,12 @@
 import logging
-
 import torch
 from transformers import AutoTokenizer, BertTokenizer
-
 from sklearn.model_selection import train_test_split
-
 import numpy as np 
 import pandas as pd 
+from src.data.dataset import DisasterTweets
 
-from src.data.make_dataset import DisasterTweets
-
+# TODO: handle logging correctly
 logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                         datefmt='%m-%d %H:%M')
@@ -18,6 +15,14 @@ logger=logging.getLogger(__name__)
 
 
 def main():
+    # TODO: MOVE THIS CONFIG!
+    # Split test, train
+    test_size = 0.2
+    # seed
+    random_state = 42
+    # Set the maximum sequence length for padding
+    MAX_LEN = 128
+
     # load dataset
     ds = DisasterTweets()
 
@@ -41,7 +46,7 @@ def main():
         encoded_sent = tokenizer.encode(
                             sent,                      # Sentence to encode.
                             add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-                            max_length = 512,          # Truncate all sentences.
+                            max_length = MAX_LEN,          # Truncate all sentences.
                             truncation =False
                             #return_tensors = 'pt',     # Return pytorch tensors.
                     )
@@ -54,17 +59,7 @@ def main():
     logger.info('Token IDs:', input_ids[0])
     logger.info('Max sentence length: ', max([len(sen) for sen in input_ids]))
 
-    # Set the maximum sequence length for padding
-    MAX_LEN = 128
-
-    logger.info('\nPadding/truncating all sentences to %d values...' % MAX_LEN)
-
-    logger.info('\nPadding token: "{:}", ID: {:}'.format(tokenizer.pad_token, tokenizer.pad_token_id))
-
-    # Pad our input tokens with value 0.
-    # "post" indicates that we want to pad and truncate at the end of the sequence,
-    # as opposed to the beginning.
-
+    # Pad our input tokens with value 0 (trailing).
     for tweet in input_ids:
         no_pads = MAX_LEN - len(tweet)  # Number of pads to add to the tweet
         pad_list = no_pads * [0]
@@ -84,10 +79,7 @@ def main():
         # Store the attention mask for this sentence.
         attention_masks.append(att_mask)
 
-    # Split test, train
-    test_size = 0.2
-    random_state = 42
-
+    # Split into train, val
     train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
                                                                 random_state=random_state, test_size=test_size)
     # Do the same for the masks.
