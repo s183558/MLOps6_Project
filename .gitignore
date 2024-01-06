@@ -182,3 +182,6 @@ test_python_shit.py
 # Notebooks
 *.ipynb
 /data
+
+# Models
+models/*
