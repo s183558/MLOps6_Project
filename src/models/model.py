@@ -1,26 +1,37 @@
 import torch
+from transformers import BertForSequenceClassification
+import pytorch_lightning as pl
 
-class MyNeuralNet(torch.nn.Module):
-    """ Basic neural network class. 
-    
-    Args:
-        in_features: number of input features
-        out_features: number of output features
-    
-    """
-    def __init__(self, in_features: int, out_features: int) -> None:
-        self.l1 = torch.nn.Linear(in_features, 500)
-        self.l2 = torch.nn.Linear(500, out_features)
-        self.r = torch.nn.ReLU()
-    
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Forward pass of the model.
+class BertClassifier(pl.LightningModule):
+    def __init__(self, learning_rate=2e-5):
+        super().__init__()
+        self.model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2)
+        self.learning_rate = learning_rate
+
+    def forward(self, batch):
+        ids, masks = batch[0], batch[1]
+        return self.model(ids, attention_mask=masks)
+
+    def training_step(self, batch, batch_idx):
+        ids, masks, labels = batch[0], batch[1], batch[2]
+        output = self.model(
+            ids,
+            attention_mask=masks,
+            labels=labels,
+        )
         
-        Args:
-            x: input tensor expected to be of shape [N,in_features]
+        return output.loss
 
-        Returns:
-            Output tensor with shape [N,out_features]
+    def validation_step(self, batch, batch_idx):
+        ids, masks, labels = batch[0], batch[1], batch[2]
+        output = self.model(
+            ids,
+            attention_mask=masks,
+            labels=labels,
+        )
 
-        """
-        return self.l2(self.r(self.l1(x)))
+        return output.loss
+
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)

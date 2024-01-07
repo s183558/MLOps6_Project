@@ -180,7 +180,7 @@ cython_debug/
 test_python_shit.py
 
 # Notebooks
-*.ipynb
+notebooks/
 /data
 
 # Ruff
