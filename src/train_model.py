@@ -3,7 +3,7 @@ from transformers import DataCollatorWithPadding, AutoTokenizer, AutoModelForSeq
 from sklearn.metrics import accuracy_score
 import numpy as np
 from hydra import compose, initialize
-from src.data.make_dataset import get_dataset_dict
+from src.data.dataset import get_dataset_dict
 import logging
 import src.common.log_config  
 logger=logging.getLogger(__name__)

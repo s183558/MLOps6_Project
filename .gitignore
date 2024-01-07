@@ -188,3 +188,6 @@ models/*
 
 # Ruff
 /.ruff_cache
+
+# Wandb
+wandb
