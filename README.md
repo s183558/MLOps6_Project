@@ -1,6 +1,6 @@
 # DTU - MLOps (group 6) 
 
-This repository, mlops6_project_source, is dedicated to an MLOps project at DTU focused on implementing a Transformer model for the classification of tweets.
+This repository, mlops6_project_source, is dedicated to an MLOps project at DTU focused on implementing a Transformer model for the binary classification of disasters from tweets.
 
 Group 6:  
 
