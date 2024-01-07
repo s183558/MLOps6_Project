@@ -183,11 +183,9 @@ test_python_shit.py
 *.ipynb
 /data
 
-# Models
-models/*
-
 # Ruff
 /.ruff_cache
 
 # Wandb
 wandb
+/models
