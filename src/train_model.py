@@ -24,11 +24,6 @@ if __name__ == '__main__':
     # Get Lit Data Module
     dm = LitDM(cfg, tokenizer =tokenizer)
 
-    # Get Dataloaders
-   # train_loader = dm.train_dataloader()
-    #alid_loader = dm.valid_dataloader()
-    #test_loader = dm.test_dataloader()
-
     # Model
     learning_rate = cfg.model["lr"]
     optimizer = cfg.model["optimizer"]

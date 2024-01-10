@@ -9,35 +9,6 @@ import os
 from typing import Optional
 from transformers import BertTokenizer, AutoTokenizer
 
-def get_datasets(cfg):
-
-
-    # Split training data
-    train_df, test_df = train_test_split(train_df, test_size=cfg.data.test_size)
-    train_df, valid_df = train_test_split(train_df, test_size=cfg.data.valid_size)
-
-    return train_df, valid_df, test_df
-
-
-def get_dataset_dict(cfg):
-    # Preprocess(or load) and get data
-    try:
-        train_df = load_train_df("train")
-    except:
-        train_df = preprocess_data("train", store=True)
-
-    # Split training data
-    train_df, test_df = train_test_split(train_df, test_size=cfg.data.test_size)
-
-    # Build Datasets
-    train_dataset = Dataset.from_pandas(train_df[:100])
-    test_dataset = Dataset.from_pandas(test_df[:100])
-    dataset_dict = DatasetDict({
-        'train': train_dataset,
-        'test': test_dataset
-    })
-    return dataset_dict
-
 
 class LitDM(lit.LightningDataModule):
     """
