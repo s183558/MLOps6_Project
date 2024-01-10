@@ -1,12 +1,17 @@
 import torch
-from transformers import BertForSequenceClassification
+from transformers import BertForSequenceClassification, AlbertForSequenceClassification
 import pytorch_lightning as pl
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class BertClassifier(pl.LightningModule):
-    def __init__(self, learning_rate=2e-5):
+    def __init__(self, optimizer="Adam", learning_rate=2e-5):
         super().__init__()
-        self.model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2)
+        self.model = AlbertForSequenceClassification.from_pretrained("albert-base-v1", num_labels=2)
         self.learning_rate = learning_rate
+        self.optimizer = optimizer
 
     def forward(self, batch):
         ids, masks = batch[0], batch[1]
@@ -20,6 +25,7 @@ class BertClassifier(pl.LightningModule):
             labels=labels,
         )
         
+        logger.info(f"Training Step: {batch_idx}, Loss: {output.loss}")
         return output.loss
 
     def validation_step(self, batch, batch_idx):
@@ -30,8 +36,14 @@ class BertClassifier(pl.LightningModule):
             labels=labels,
         )
 
+        preds = torch.argmax(output.logits, dim=1)
+        correct = (preds == labels).sum()
+        accuracy = correct / len(labels)
+        logger.info(f"Validation Step: {batch_idx}, Loss: {output.loss}, Accuracy: {accuracy}")
+
         return output.loss
 
 
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
+        if self.optimizer == "Adam":
+            return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
