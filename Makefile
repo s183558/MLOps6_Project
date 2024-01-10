@@ -40,17 +40,11 @@ clean:
 data:
 	python $(PROJECT_NAME)/data/make_dataset.py
 
-## Process raw data into processed data
-features:
-	python $(PROJECT_NAME)/features/build_features.py
 
 ## Process raw data into processed data
 train:
 	python $(PROJECT_NAME)/train_model.py
 
-## Process raw data into processed data
-train_alt:
-	python $(PROJECT_NAME)/train_model_alt.py
 
 
 #################################################################################

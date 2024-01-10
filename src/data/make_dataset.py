@@ -6,9 +6,6 @@ import torch
 
 logger=logging.getLogger(__name__)
 
-
-############ -- train_model_lit.py -- ############
-
 def processing(df: pd.DataFrame) -> pd.DataFrame:
     # Drop stuff
     df = df.dropna()
@@ -23,18 +20,6 @@ def processing(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-def preprocess_data2(file_path: str, store: bool = True):
-    # Load File
-    data_df = pd.read_csv(file_path)
-
-    # Process it
-    logger.info(f'Preprocessing dataframe of shape: {data_df.shape}')
-    data_df = processing(data_df)
-
-    return data_df
-
-
-############ -- train_model.py -- ############
 def get_project_dir() -> str:
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

@@ -41,8 +41,21 @@ class BertClassifier(pl.LightningModule):
         accuracy = correct / len(labels)
         logger.info(f"Validation Step: {batch_idx}, Loss: {output.loss}, Accuracy: {accuracy}")
 
-        return output.loss
+        self.log("val_loss", output.loss)
+       # return output.loss
 
+    def test_step(self, batch, batch_idx):
+        ids, masks, labels = batch[0], batch[1], batch[2]
+        output = self.model(
+            ids,
+            attention_mask=masks,
+            labels=labels,
+        )
+        preds = torch.argmax(output.logits, dim=1)
+        correct = (preds == labels).sum()
+        accuracy = correct / len(labels)
+
+        self.log("test_acc", accuracy)
 
     def configure_optimizers(self):
         if self.optimizer == "Adam":

@@ -1,76 +1,46 @@
+import pandas as pd
+from pytorch_lightning import Trainer
+from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
-from transformers import DataCollatorWithPadding, AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
-from sklearn.metrics import accuracy_score
-import numpy as np
+from transformers import BertTokenizer, AutoTokenizer
+
+from src.data.dataset import LitDM
+from src.models.model import BertClassifier
+from src.project_manager import ProjectManager
+
 from hydra import compose, initialize
-from src.data.dataset import get_dataset_dict
-import logging
-import src.common.log_config  
-logger=logging.getLogger(__name__)
-
-def compute_metrics(eval_pred):
-    predictions, labels = eval_pred
-    predictions = np.argmax(predictions, axis=1)
-    return {"accuracy": accuracy_score(labels, predictions)}
 
 if __name__ == '__main__':
-    # load hydra configs
-    with initialize(config_path='../conf', version_base="1.1"):
+    # Create Project Manager    
+    project_manager = ProjectManager()
+
+    # Initialize hydra hypermaters
+    with initialize(config_path="../conf", version_base="1.1"):
         cfg: dict = compose(config_name='config.yaml')
-    
-    dataset_dict = get_dataset_dict(cfg)
 
-    # Tokenize
-    tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
-    def preprocess_function(examples):
-        return tokenizer(examples["text"], truncation=True)
-    tokenized_data = dataset_dict.map(preprocess_function)
+    # Specify tokenizerma
+    tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
 
-    # Padding by batch
-    data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+    # Get Lit Data Module
+    dm = LitDM(cfg, tokenizer =tokenizer)
+
+    # Get Dataloaders
+   # train_loader = dm.train_dataloader()
+    #alid_loader = dm.valid_dataloader()
+    #test_loader = dm.test_dataloader()
 
     # Model
-    id2label = {0: "NO DISASTER", 1: "DISASTER"}
-    label2id = {"NO DISASTER": 0, "DISASTER": 1}
-    model = AutoModelForSequenceClassification.from_pretrained(
-        "bert-base-uncased", num_labels=2, id2label=id2label, label2id=label2id
-    )
+    learning_rate = cfg.model["lr"]
+    optimizer = cfg.model["optimizer"]
+    model = BertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
-    # Training arguments
-    training_args = TrainingArguments(
-                    output_dir=cfg.model["output_dir"],
-                    learning_rate=cfg.model["lr"],
-                    per_device_train_batch_size=cfg.model["per_device_train_batch_size"],
-                    per_device_eval_batch_size=cfg.model["per_device_eval_batch_size"],
-                    num_train_epochs=cfg.model["epochs"],
-                    weight_decay=cfg.model["weight_decay"],
+    # Training
+    epochs = cfg.model["epochs"]
+    trainer = Trainer(max_epochs=cfg.model["epochs"],
+                      callbacks=[EarlyStopping(monitor="val_loss", mode="min")])
+    
+    trainer.fit(model, dm)
 
-                    evaluation_strategy="epoch",
-                    save_strategy="epoch",
-                    logging_strategy="steps",  # Log every X steps
-                    logging_steps=1,
-                    load_best_model_at_end=True,
-                    push_to_hub=False,
-                                    )
-
-    # Trainer
-    trainer = Trainer(
-                model=model,
-                args=training_args,
-                train_dataset=tokenized_data["train"],
-                eval_dataset=tokenized_data["test"],
-                tokenizer=tokenizer, 
-                data_collator=data_collator,
-                compute_metrics=compute_metrics,
-                        )
-
-    trainer.train()
-
-
-
-
-
-
-
-
+    # Evaluation
+    trainer.test(model,dm)
 
