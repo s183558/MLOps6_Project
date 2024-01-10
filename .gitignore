@@ -189,3 +189,6 @@ notebooks/
 # Wandb
 wandb
 /models
+
+#lightening
+/lightning_logs

@@ -30,10 +30,9 @@ if __name__ == '__main__':
     model = AlbertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
     # Training
-    epochs = cfg.model["epochs"]
     trainer = Trainer(
         max_epochs=cfg.model["epochs"],
-        callbacks=[EarlyStopping(monitor="val_loss", mode="min"),
+        callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
         check_val_every_n_epoch=1, # Evaluate after every epoch
         enable_checkpointing = False, # Model checkpoints
         limit_train_batches=0.2, # Train at only 20% of the data
@@ -41,7 +40,7 @@ if __name__ == '__main__':
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",
         precision="16-true", # Drop from float 32 to float 16 precision for memory efficiency
-    ])
+                    )
     
     trainer.fit(model, dm)
 
