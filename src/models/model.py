@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class BertClassifier(pl.LightningModule):
+class AlbertClassifier(pl.LightningModule):
     def __init__(self, optimizer="Adam", learning_rate=2e-5):
         super().__init__()
         self.model = AlbertForSequenceClassification.from_pretrained("albert-base-v1", num_labels=2)

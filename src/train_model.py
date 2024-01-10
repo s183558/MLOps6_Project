@@ -5,7 +5,7 @@ from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from transformers import BertTokenizer, AutoTokenizer
 
 from src.data.dataset import LitDM
-from src.models.model import BertClassifier
+from src.models.model import AlbertClassifier
 from src.project_manager import ProjectManager
 
 from hydra import compose, initialize
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # Model
     learning_rate = cfg.model["lr"]
     optimizer = cfg.model["optimizer"]
-    model = BertClassifier(optimizer=optimizer, learning_rate=learning_rate)
+    model = AlbertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
     # Training
     epochs = cfg.model["epochs"]
