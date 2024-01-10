@@ -9,6 +9,10 @@ from sklearn.model_selection import train_test_split
 from transformers import BertTokenizer, AutoTokenizer
 import torch
 from hydra import compose, initialize
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     # Create Project Manager    
@@ -26,7 +30,6 @@ if __name__ == '__main__':
     # data_df = pd.read_pickle(file_path)
 
     # Split
-    data_df = data_df.head(100) # For brievity
     train_df, val_df = train_test_split(data_df, test_size=cfg.data["test_size"], random_state=cfg.data["seed"])
 
     # Tokenize
@@ -52,6 +55,8 @@ if __name__ == '__main__':
     test_dataset = TensorDataset(val_encodings["input_ids"], val_encodings["attention_mask"], val_labels)
     train_loader = DataLoader(train_dataset, batch_size=cfg.data["batch_size"], shuffle=True, num_workers=15)
     test_loader = DataLoader(test_dataset, batch_size=cfg.data["batch_size"], num_workers=15)
+    logger.info(f"Train Batches: {len(train_loader)}")
+    logger.info(f"Test Batches: {len(test_loader)}")
 
     # Model
     learning_rate = cfg.model["lr"]
@@ -59,7 +64,17 @@ if __name__ == '__main__':
     model = BertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
     # Training
+    logger.info(f"--- Training Starts ---")
     epochs = cfg.model["epochs"]
-    trainer = Trainer(max_epochs=cfg.model["epochs"])
+    trainer = Trainer(
+        max_epochs=10,
+        check_val_every_n_epoch=1,
+        enable_checkpointing = False,
+        limit_train_batches=0.2, # Train at only 20% of the data
+        #limit_val_batches=0.2,
+        num_sanity_val_steps=0,
+        #profiler="simple",
+        precision="16-true", # Drop from floar 32 to float 16 for memory efficiency
+    )
     trainer.fit(model, train_loader, test_loader)
 
