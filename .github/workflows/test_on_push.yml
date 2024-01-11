@@ -1,10 +1,10 @@
-name: "Run tests (FEv2 version)"
+name: "Run tests"
 
 on:
   push:
-    branches: [ gh_actions_A ]
+    branches: [ main ]
   pull_request:
-    branches: [ gh_actions_A ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -45,13 +45,9 @@ jobs:
 
     - uses: iterative/setup-dvc@v1
     - name: Get data
-      run: |
-        
-        dvc pull
+      run:  dvc pull
 
-        
-        
-    - name: Test with pytest
+    - name: Unittesting with pytest
       run: |
         pip install pytest
         pytest -v
