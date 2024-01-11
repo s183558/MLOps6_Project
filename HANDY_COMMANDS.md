@@ -33,7 +33,7 @@ Unless otherwise specified, all commands listed in this documentation are intend
 
  ---------------------------------------------------- **Pytest & Coverage** ----------------------------------------------------
 
-### (1) ONLY run unittests and NO coverage report
+### 1) ONLY run unittests and NO coverage report
 🟢 (pip install pytest)  
 🟢 pytest tests/
 <br>
