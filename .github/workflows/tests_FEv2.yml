@@ -37,14 +37,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_dev.txt
-        gcloud auth activate-service-account ${{ secrets.GCLOUD_CREDENTIALS_ANDREAS }}
-        
+
     - uses: iterative/setup-dvc@v1
     - name: Get data
       run: |
         pip install dvc-gs
         dvc pull
-
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS : ${{ secrets.GCLOUD_CREDENTIALS_FE }}
         
         
     - name: Test with pytest
