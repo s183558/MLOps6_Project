@@ -8,17 +8,11 @@ from src.data.dataset import LitDM
 from src.models.model import AlbertClassifier
 from src.project_manager import ProjectManager
 
-from hydra import compose, initialize
+import hydra
+from omegaconf import DictConfig, OmegaConf
 
-
-def main():
-    # Create Project Manager    
-    #project_manager = ProjectManager()
-
-    # Initialize hydra hypermaters
-    with initialize(config_path="../conf", version_base="1.1"):
-        cfg: dict = compose(config_name='config.yaml')
-
+@hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
+def main(cfg:DictConfig):
     # Specify tokenizer
     tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
 
@@ -34,7 +28,7 @@ def main():
     trainer = Trainer(
         default_root_dir='/models/',
         max_epochs=cfg.model["epochs"],
-        
+
         callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
 
         check_val_every_n_epoch=1, # Evaluate after every epoch
@@ -52,9 +46,6 @@ def main():
 
     # Evaluation
     trainer.test(model,dm)
-
-    # Save model
-   # model.save("/models/")
 
 if __name__ == '__main__':
     main()
