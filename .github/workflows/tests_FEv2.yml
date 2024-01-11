@@ -39,8 +39,7 @@ jobs:
         pip install -r requirements_dev.txt
 
     - name: Authenticate gcloud    
-      run: |
-        gcloud auth activate-service-account ${{ secrets.GCLOUD_CREDENTIALS_ANDREAS }}
+      run: gcloud auth activate-service-account ${{ secrets.GCLOUD_CREDENTIALS_ANDREAS }}
 
     - uses: iterative/setup-dvc@v1
     - name: Get data
