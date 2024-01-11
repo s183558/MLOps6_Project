@@ -49,7 +49,6 @@ jobs:
     - name: Get data
       run: |
         pip install dvc-gs
-        gcloud auth activate-service-account --key-file ${{ secrets.GCLOUD_CREDENTIALS_FE }}
         dvc pull
       env:
         GOOGLE_APPLICATION_CREDENTIALS : ${{ secrets.GCLOUD_CREDENTIALS_FE }}
