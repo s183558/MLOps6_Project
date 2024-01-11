@@ -36,6 +36,7 @@ def train_main(cfg:DictConfig):
 
         limit_train_batches=cfg.model["limit_train_batches"], # Train at only 20% of the data
         limit_val_batches=cfg.model["limit_val_batches"],
+        limit_test_batches = cfg.model["limit_test_batches"],
 
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",

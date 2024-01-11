@@ -14,6 +14,7 @@ def test_train_main():
             'epochs': 100,
             'limit_train_batches': 1,
             'limit_val_batches': 1,
+            'limit_test_batches': 1,
             'mixed_precision': 32
         }
     })

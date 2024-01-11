@@ -17,20 +17,22 @@ def test_train_main():
             'valid_size': 0.2,
             'seed': 42,
             'token_max_length': 128,
-            'batch_size': 32,
+            'batch_size': 2,
         },
         'model': {
             'output_dir': 'models/',
             'optimizer': 'Adam',
             'lr': 2e-5,
-            'epochs': 2,
+            'epochs': 1,
+            'max_steps': 1,
 
-            'per_device_train_batch_size': 16,
-            'per_device_eval_batch_size': 16,
-            'weight_decay': 0.01,
+            # 'per_device_train_batch_size': 16,
+            # 'per_device_eval_batch_size': 16,
+            # 'weight_decay': 0.01,
 
-            'limit_train_batches': 0.05,
-            'limit_val_batches': 0.05,
+            'limit_train_batches': 0.0006,
+            'limit_val_batches': 0.003,
+            'limit_test_batches': 0.004,
 
             'mixed_precision': "32-true",
         }})

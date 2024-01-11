@@ -9,5 +9,6 @@ weight_decay: 0.01
 
 limit_train_batches: 0.2
 limit_val_batches: 1.0
+limit_test_batches: 1.0
 
 mixed_precision: "16-true"
