@@ -1,3 +1,4 @@
 defaults:
     - data: default
     - model: default
+    - wandb_logging: True

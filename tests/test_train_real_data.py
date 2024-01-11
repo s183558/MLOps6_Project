@@ -24,7 +24,9 @@ def test_train_main():
             'limit_test_batches': 0.004,
 
             'mixed_precision': "32-true",
-        }})
+        },
+        'wandb_logging': False,
+        })
 
     # Call the function
     train_main(cfg)

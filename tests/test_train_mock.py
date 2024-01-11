@@ -16,7 +16,8 @@ def test_train_main():
             'limit_val_batches': 1,
             'limit_test_batches': 1,
             'mixed_precision': 32
-        }
+        },
+        'wandb_logging': False,
     })
 
     # Mock the tokenizer, data module, model, and trainer

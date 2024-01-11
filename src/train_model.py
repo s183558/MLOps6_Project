@@ -24,13 +24,16 @@ def train_main(cfg:DictConfig):
     model = AlbertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
     # Setup Wandb logging
-    wandb_logger = WandbLogger(log_model="all",
-                               project="mlops_for_the_win",
-                               entity='mlops_for_the_win',
-                               )
-    wandb_logger.log_hyperparams(cfg)
-    wandb_logger.watch(model, log='gradients', log_freq=1)
-    wandb_logger.log_metrics({"lr": learning_rate})
+    if cfg.wandb_logging:
+        wandb_logger = WandbLogger(log_model="all",
+                                project="mlops_for_the_win",
+                                entity='mlops_for_the_win',
+                                )
+        wandb_logger.log_hyperparams(cfg)
+        wandb_logger.watch(model, log='gradients', log_freq=1)
+        wandb_logger.log_metrics({"lr": learning_rate})
+    else:
+        wandb_logger = None
 
     # Training
     trainer = Trainer(
