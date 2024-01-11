@@ -10,7 +10,8 @@ from src.project_manager import ProjectManager
 
 from hydra import compose, initialize
 
-if __name__ == '__main__':
+
+def main():
     # Create Project Manager    
     #project_manager = ProjectManager()
 
@@ -31,15 +32,20 @@ if __name__ == '__main__':
 
     # Training
     trainer = Trainer(
+        default_root_dir='/models/',
         max_epochs=cfg.model["epochs"],
+        
         callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
+
         check_val_every_n_epoch=1, # Evaluate after every epoch
-        enable_checkpointing = False, # Model checkpoints
-        limit_train_batches=1.0, # Train at only 20% of the data
-        #limit_val_batches=0.2,
+        enable_checkpointing = True, # Model checkpoints
+
+        limit_train_batches=cfg.model["limit_train_batches"], # Train at only 20% of the data
+        limit_val_batches=cfg.model["limit_val_batches"],
+
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",
-        precision="16-true", # Drop from float 32 to float 16 precision for memory efficiency
+        precision=cfg.model["mixed_precision"], # Drop from float 32 to float 16 precision for memory efficiency
                     )
     # Fit model
     trainer.fit(model, dm)
@@ -47,3 +53,8 @@ if __name__ == '__main__':
     # Evaluation
     trainer.test(model,dm)
 
+    # Save model
+   # model.save("/models/")
+
+if __name__ == '__main__':
+    main()
