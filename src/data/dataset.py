@@ -12,10 +12,9 @@ class LitDM(lit.LightningDataModule):
     Load, proces and tokenize data
     Collect dataloaders
     """
-    def __init__(self, cfg:dict, data_dir: str = "path/to/dir", tokenizer = None):
+    def __init__(self, cfg:dict, tokenizer = None):
         super().__init__()
         self.cfg = cfg
-        self.data_dir = data_dir
         self.tokenizer = tokenizer
 
         self.cpu_cnt = os.cpu_count() or 2
