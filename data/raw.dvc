@@ -1,6 +1,25 @@
 outs:
-- md5: 135eaa48a703eaec876d7752180cb8ce.dir
-  size: 1446767
-  nfiles: 3
-  hash: md5
+- hash: md5
   path: raw
+  files:
+  - relpath: data_raw_sample_submission.csv
+    md5: 2202b463d199eb9e70ee5c1a9c9a0462
+    size: 26010
+    cloud:
+      remote_storage:
+        etag: 08de88c597a0d583031001
+        version_id: '1704973216859230'
+  - relpath: data_raw_test.csv
+    md5: e53fc8676205c574d4f8b12eaf5f4d0c
+    size: 424483
+    cloud:
+      remote_storage:
+        etag: 08a48ad197a0d583031001
+        version_id: '1704973217056036'
+  - relpath: data_raw_train.csv
+    md5: b842e8077c8ae6ef9734e8692f99c7be
+    size: 996274
+    cloud:
+      remote_storage:
+        etag: 08b0f9db97a0d583031001
+        version_id: '1704973217234096'
