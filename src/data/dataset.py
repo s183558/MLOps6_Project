@@ -90,7 +90,10 @@ class LitDM(lit.LightningDataModule):
         self.get_tensor_datasets()
 
     def train_dataloader(self) -> DataLoader:
-        return DataLoader(self.train_dataset, batch_size=self.cfg.data["batch_size"], num_workers=self.cpu_cnt)
+        return DataLoader(self.train_dataset,
+                          batch_size=self.cfg.data["batch_size"],
+                          num_workers=self.cpu_cnt,
+                          persistent_workers=True)
 
     def val_dataloader(self) -> DataLoader:
         return DataLoader(self.valid_dataset, batch_size=self.cfg.data["batch_size"], num_workers=self.cpu_cnt)
