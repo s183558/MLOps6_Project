@@ -41,7 +41,7 @@ jobs:
     - name: install dvc
       run: |
         pip install dvc
-        pip install dvc[gcloud]
+        pip install dvc-gs
         dvc pull
         
     - name: Test with pytest
