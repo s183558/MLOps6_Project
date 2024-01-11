@@ -1,0 +1,16 @@
+from src.data import make_dataset
+
+
+def test_create_dataset():
+    # Test case 1: Verify that the dataset is created successfully
+    dataset = make_dataset.create_dataset()
+    assert len(dataset) > 0
+    assert isinstance(dataset, list)
+
+    # Test case 2: Verify that the dataset contains the expected columns
+    expected_columns = ['feature1', 'feature2', 'target']
+    assert all(col in dataset[0].keys() for col in expected_columns), "The dataset does not contain the expected columns"
+
+    # Test case 3: Verify that the dataset has the correct number of rows
+    expected_num_rows = 1000
+    assert len(dataset) == expected_num_rows, "The dataset does not have the expected number of rows"
