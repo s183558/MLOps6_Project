@@ -1,10 +1,6 @@
 from src.train_model import train_main
 from omegaconf import DictConfig
-import os.path
-import pytest
-from tests import _PATH_DATA
 
-@pytest.mark.skipif(not os.path.exists(_PATH_DATA), reason="Data files not found")
 #@pytest.mark.parametrize("precision", ["32-true", "16-true"])
 def test_train_main():
     # The configurations for the tests
