@@ -49,4 +49,4 @@ def load_train_df(file: str) -> pd.DataFrame:
 
 
 if __name__=="__main__":  
-    preprocess_data("train", store=True)
+    preprocess_data("data_raw_train", store=True)

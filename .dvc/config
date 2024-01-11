@@ -1,4 +1,5 @@
 [core]
-    remote = storage
-['remote "storage"']
-    url = gdrive://1zHCidgCTwexhrYhEQabCffU5O6J-sXos
+    remote = remote_storage
+['remote "remote_storage"']
+    url = gs://mlops6_tweets/
+    version_aware = true

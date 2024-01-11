@@ -26,9 +26,9 @@ class LitDM(lit.LightningDataModule):
         Load or proces datasets
         """
         try:
-            self.data_df = load_train_df("train")
+            self.data_df = load_train_df("data_raw_train")
         except:
-            self.data_df = preprocess_data("train", store=True)
+            self.data_df = preprocess_data("data_raw_train", store=True)
 
     def split_datasets(self):
         """
