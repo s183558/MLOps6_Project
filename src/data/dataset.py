@@ -1,4 +1,4 @@
-from src import load_train_df, preprocess_data
+from data.make_dataset import load_train_df, preprocess_data
 from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import TensorDataset, DataLoader

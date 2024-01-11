@@ -1,4 +1,6 @@
 output_dir: models/
+wandb_logging: enabled
+
 optimizer: Adam
 lr: 2e-5
 epochs: 2
