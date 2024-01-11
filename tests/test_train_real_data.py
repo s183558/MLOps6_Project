@@ -1,7 +1,4 @@
-from unittest.mock import patch, MagicMock
 from src.train_model import train_main
-from transformers import AutoTokenizer
-from pytorch_lightning import Trainer
 from omegaconf import DictConfig
 import os.path
 import pytest
@@ -36,4 +33,3 @@ def test_train_main():
     # Call the function
     train_main(cfg)
 
-    #
