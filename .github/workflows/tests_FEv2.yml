@@ -1,10 +1,10 @@
-name: "Run tests (FE version)"
+name: "Run tests (FEv2 version)"
 
 on:
   push:
-    branches: [ gh_actions, main ]
+    branches: [ gh_actions_FE ]
   pull_request:
-    branches: [ gh_actions, main ]
+    branches: [ gh_actions_FE ]
 
 jobs:
   build:
