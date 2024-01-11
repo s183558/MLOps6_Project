@@ -12,7 +12,7 @@ import hydra
 from omegaconf import DictConfig, OmegaConf
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
-def main(cfg:DictConfig):
+def train_main(cfg:DictConfig):
     # Specify tokenizer
     tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
 
@@ -36,6 +36,7 @@ def main(cfg:DictConfig):
 
         limit_train_batches=cfg.model["limit_train_batches"], # Train at only 20% of the data
         limit_val_batches=cfg.model["limit_val_batches"],
+        limit_test_batches = cfg.model["limit_test_batches"],
 
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",
@@ -48,4 +49,4 @@ def main(cfg:DictConfig):
     trainer.test(model,dm)
 
 if __name__ == '__main__':
-    main()
+    train_main()
