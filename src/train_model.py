@@ -26,7 +26,7 @@ def main(cfg:DictConfig):
 
     # Training
     trainer = Trainer(
-        default_root_dir='/models/',
+        default_root_dir='models/',
         max_epochs=cfg.model["epochs"],
 
         callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
