@@ -1,17 +1,16 @@
-import pandas as pd
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
+from pytorch_lightning.loggers import WandbLogger
 
-from transformers import BertTokenizer, AutoTokenizer
+from transformers import AutoTokenizer
 
 from src.data.dataset import LitDM
 from src.models.model import AlbertClassifier
-from src.project_manager import ProjectManager
 
 import hydra
-from omegaconf import DictConfig, OmegaConf
+from omegaconf import DictConfig
 
-@hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
+@hydra.main(version_base=None, config_path="../conf", config_name="config_tests.yaml")
 def train_main(cfg:DictConfig):
     # Specify tokenizer
     tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
@@ -25,6 +24,7 @@ def train_main(cfg:DictConfig):
     model = AlbertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
     # Training
+    wandb_logger = WandbLogger(log_model="all", name="test", project="mlops_for_the_win")
     trainer = Trainer(
         default_root_dir='models/',
         max_epochs=cfg.model["epochs"],
@@ -41,6 +41,8 @@ def train_main(cfg:DictConfig):
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",
         precision=cfg.model["mixed_precision"], # Drop from float 32 to float 16 precision for memory efficiency
+
+        logger=wandb_logger,
                     )
     # Fit model
     trainer.fit(model, dm)
