@@ -26,7 +26,9 @@ class AlbertClassifier(pl.LightningModule):
             labels=labels,
         )
         
+        # Log loss and metric
         logger.info(f"Training Step: {batch_idx}, Loss: {output.loss}")
+        self.log("train_loss", output.loss)
         return output.loss  
 
     def validation_step(self, batch, batch_idx):
@@ -43,6 +45,7 @@ class AlbertClassifier(pl.LightningModule):
         logger.info(f"Validation Step: {batch_idx}, Loss: {output.loss}, Accuracy: {accuracy}")
 
         self.log("val_loss", output.loss)
+        self.log("val_accuracy", accuracy)
 
 
     def test_step(self, batch, batch_idx):

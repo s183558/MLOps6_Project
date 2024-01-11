@@ -29,6 +29,8 @@ def train_main(cfg:DictConfig):
                                entity='mlops_for_the_win',
                                )
     wandb_logger.log_hyperparams(cfg)
+    wandb_logger.watch(model, log='gradients', log_freq=1)
+    wandb_logger.log_metrics({"lr": learning_rate})
 
     # Training
     trainer = Trainer(
