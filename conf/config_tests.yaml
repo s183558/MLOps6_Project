@@ -1,0 +1,3 @@
+defaults:
+    - data: default_tests
+    - model: default_tests

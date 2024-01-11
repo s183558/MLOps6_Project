@@ -1,0 +1,11 @@
+output_dir: models/
+optimizer: Adam
+lr: 2e-5
+epochs: 2
+max_steps: 1
+
+limit_train_batches: 0.0006
+limit_val_batches: 0.003
+limit_test_batches: 0.004
+
+mixed_precision: "32-true"
