@@ -51,7 +51,7 @@ jobs:
         pip install dvc-gs
         dvc pull
       env:
-        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GCLOUD_CREDENTIALS_FE }}
+        GCLOUD_CREDENTIALS_DATA: ${{ secrets.GCLOUD_CREDENTIALS_FE }}
         
     - name: Test with pytest
       run: |
