@@ -42,6 +42,7 @@ jobs:
       run: |
         pip install dvc
         pip install dvc-gs
+        gcloud auth activate-service-account ${{ secrets.GCLOUD_CREDENTIALS_ANDREAS }}
         dvc pull
         
     - name: Test with pytest
