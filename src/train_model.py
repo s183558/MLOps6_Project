@@ -23,8 +23,14 @@ def train_main(cfg:DictConfig):
     optimizer = cfg.model["optimizer"]
     model = AlbertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
+    # Setup Wandb logging
+    wandb_logger = WandbLogger(log_model="all",
+                               project="mlops_for_the_win",
+                               entity='mlops_for_the_win',
+                               )
+    wandb_logger.log_hyperparams(cfg)
+
     # Training
-    wandb_logger = WandbLogger(log_model="all", name="test", project="mlops_for_the_win")
     trainer = Trainer(
         default_root_dir='models/',
         max_epochs=cfg.model["epochs"],
