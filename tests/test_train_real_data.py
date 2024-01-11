@@ -26,10 +26,6 @@ def test_train_main():
             'epochs': 1,
             'max_steps': 1,
 
-            # 'per_device_train_batch_size': 16,
-            # 'per_device_eval_batch_size': 16,
-            # 'weight_decay': 0.01,
-
             'limit_train_batches': 0.0006,
             'limit_val_batches': 0.003,
             'limit_test_batches': 0.004,
