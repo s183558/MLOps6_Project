@@ -192,3 +192,6 @@ wandb
 
 #lightening
 /lightning_logs
+
+# hydra outputs
+/outputs
