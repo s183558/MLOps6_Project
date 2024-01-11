@@ -42,7 +42,7 @@ class AlbertClassifier(pl.LightningModule):
         logger.info(f"Validation Step: {batch_idx}, Loss: {output.loss}, Accuracy: {accuracy}")
 
         self.log("val_loss", output.loss)
-       # return output.loss
+
 
     def test_step(self, batch, batch_idx):
         ids, masks, labels = batch[0], batch[1], batch[2]
@@ -56,6 +56,9 @@ class AlbertClassifier(pl.LightningModule):
         accuracy = correct / len(labels)
 
         self.log("test_acc", accuracy)
+
+    def predict_step(self, batch, batch_idx):
+        pass
 
     def configure_optimizers(self):
         if self.optimizer == "Adam":

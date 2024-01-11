@@ -1,14 +1,9 @@
-from typing import Optional
-from datasets import Dataset, DatasetDict
 from data.make_dataset import load_train_df, preprocess_data
 from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 import pytorch_lightning as lit
 import os
-from typing import Optional
-from transformers import BertTokenizer, AutoTokenizer
-
 
 class LitDM(lit.LightningDataModule):
     """
@@ -89,6 +84,7 @@ class LitDM(lit.LightningDataModule):
                                     self.test_encodings["attention_mask"], 
                                     self.test_labels)
     def prepare(self):
+        # TODO: use setup()
         self.collect_dataset()
         self.split_datasets()
         self.tokenize_data()
