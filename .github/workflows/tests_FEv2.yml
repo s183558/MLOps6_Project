@@ -47,7 +47,9 @@ jobs:
 
     - uses: iterative/setup-dvc@v1
     - name: Get data
-      run: dvc pull
+      run: |
+        pip install dvc-gs
+        dvc pull
       env:
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GCLOUD_CREDENTIALS_FE }}
         
