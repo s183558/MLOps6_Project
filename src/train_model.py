@@ -10,7 +10,7 @@ from src.models.model import AlbertClassifier
 import hydra
 from omegaconf import DictConfig
 
-@hydra.main(version_base=None, config_path="../conf", config_name="config_tests.yaml")
+@hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
 def train_main(cfg:DictConfig):
     # Specify tokenizer
     tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
