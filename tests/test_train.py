@@ -1,20 +1,19 @@
-import pytest
 from unittest.mock import patch, MagicMock
-from src.train_model import main
+from src.train_model import train_main
 from transformers import AutoTokenizer
 from pytorch_lightning import Trainer
 from omegaconf import DictConfig
 
-def test_main():
+def test_train_main():
     # Mock the configuration
     cfg = DictConfig({
         'model': {
             'lr': 0.001,
             'optimizer': 'Adam',
-            'epochs': 10,
-            'limit_train_batches': 0.2,
-            'limit_val_batches': 0.2,
-            'mixed_precision': 16
+            'epochs': 100,
+            'limit_train_batches': 1,
+            'limit_val_batches': 1,
+            'mixed_precision': 32
         }
     })
 
@@ -33,7 +32,7 @@ def test_main():
         mock_trainer_init.return_value = None
 
         # Call the function
-        main(cfg)
+        train_main(cfg)
 
         # Verify that the mocks were called with the correct arguments
         mock_tokenizer.assert_called_once_with('albert-base-v1')

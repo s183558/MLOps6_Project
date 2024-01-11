@@ -12,7 +12,7 @@ import hydra
 from omegaconf import DictConfig, OmegaConf
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
-def main(cfg:DictConfig):
+def train_main(cfg:DictConfig):
     # Specify tokenizer
     tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
 
@@ -48,4 +48,4 @@ def main(cfg:DictConfig):
     trainer.test(model,dm)
 
 if __name__ == '__main__':
-    main()
+    train_main()
