@@ -20,7 +20,7 @@ Unless otherwise specified, all commands listed in this documentation are intend
 <br>
 
 ### 3) Override entry point and run in interactive mode:
-(usefull for debugging)
+(usefull for debugging)  
 🟢 docker run -it --entrypoint sh trainer:latest
 <br>
 
@@ -34,18 +34,18 @@ Unless otherwise specified, all commands listed in this documentation are intend
  ---------------------------------------------------- **Pytest & Coverage** ----------------------------------------------------
 
 ### (1) ONLY run unittests and NO coverage report
-🟢 (pip install pytest)
+🟢 (pip install pytest)  
 🟢 pytest tests/
 <br>
 
 ### 2) Create coverage report:
-🟢 (pip install coverage)
+🟢 (pip install coverage)  
 🟢 coverage run -m pytest tests/
 <br>
 
 ### 3) Display the report in the terminal
-The 2nd comman also shows which lines in the code are untested
-🟢 coverage report
+The 2nd comman also shows which lines in the code are untested  
+🟢 coverage report  
 🟢 coverage report -m
 <br>
 
