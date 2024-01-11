@@ -12,6 +12,7 @@ class AlbertClassifier(pl.LightningModule):
         self.model = AlbertForSequenceClassification.from_pretrained("albert-base-v1", num_labels=2)
         self.learning_rate = learning_rate
         self.optimizer = optimizer
+        self.save_hyperparameters()
 
     def forward(self, batch):
         ids, masks = batch[0], batch[1]
@@ -26,7 +27,7 @@ class AlbertClassifier(pl.LightningModule):
         )
         
         logger.info(f"Training Step: {batch_idx}, Loss: {output.loss}")
-        return output.loss
+        return output.loss  
 
     def validation_step(self, batch, batch_idx):
         ids, masks, labels = batch[0], batch[1], batch[2]
