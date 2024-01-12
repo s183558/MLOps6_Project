@@ -22,7 +22,7 @@ def predict(
     """
     return torch.cat([model(batch) for batch in dataloader], 0)
 
-
+    
 if __name__ == '__main__':
     print("Started predicting 1 2 3...")
     model_data = load_model()
