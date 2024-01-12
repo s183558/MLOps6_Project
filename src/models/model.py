@@ -62,7 +62,7 @@ class AlbertClassifier(pl.LightningModule):
         self.log("test_acc", accuracy)
 
     def predict_step(self, batch, batch_idx):
-        pass
+        return self(batch)
 
     def configure_optimizers(self):
         if self.optimizer == "Adam":
