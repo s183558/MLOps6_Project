@@ -3,8 +3,7 @@ wandb_logging: enabled
 
 optimizer: Adam
 lr: 2e-5
-epochs: 2
-max_steps: 1
+epochs: 10
 
 per_device_train_batch_size: 16
 per_device_eval_batch_size: 16
