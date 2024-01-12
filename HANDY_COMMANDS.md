@@ -49,3 +49,10 @@ The 2nd comman also shows which lines in the code are untested
 🟢 coverage report -m
 <br>
 
+ ---------------------------------------------------- **Connecting to GCloud** ----------------------------------------------------
+
+### 1) Data bucket with DVC
+🟢 gcloud auth login
+🟢 gcloud config set project mlops6-410910
+<br>
+
