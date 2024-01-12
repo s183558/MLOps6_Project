@@ -23,7 +23,7 @@ def test_train_main():
         # Call the function with test config
         with initialize(version_base=None, config_path="../conf"):
             cfg = compose(config_name="config_tests.yaml")
-            train_main(cfg)
+        train_main(cfg)
 
         # Verify that the mocks were called with the correct arguments
         mock_tokenizer.assert_called_once_with('albert-base-v1')
