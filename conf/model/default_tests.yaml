@@ -1,5 +1,5 @@
 output_dir: models/
-wandb_logging: enabled
+wandb_logging: disabled
 
 optimizer: Adam
 lr: 2e-5
