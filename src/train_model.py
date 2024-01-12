@@ -24,7 +24,7 @@ def train_main(cfg:DictConfig):
     model = AlbertClassifier(optimizer=optimizer, learning_rate=learning_rate)
 
     # Setup Wandb logging
-    if cfg.model.wandb_logging == "all": # Oh I know. This was a bool, and a good one. But Hydra in Docker doesnt only allow str, float or int.
+    if cfg.model.wandb_logging == "enabled": # Oh I know. This was a bool, and a good one. But Hydra in Docker doesnt only allow str, float or int.
         wandb_logger = WandbLogger(log_model="all",
                                 project="mlops_for_the_win",
                                 entity='mlops_for_the_win',
@@ -40,7 +40,7 @@ def train_main(cfg:DictConfig):
         default_root_dir=cfg.model["output_dir"],
         max_epochs=cfg.model["epochs"],
 
-      #  callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
+        callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
 
         check_val_every_n_epoch=1, # Evaluate after every epoch
         enable_checkpointing = True, # Model checkpoints
@@ -51,7 +51,7 @@ def train_main(cfg:DictConfig):
 
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",
-    #    precision=cfg.model["mixed_precision"], # Drop from float 32 to float 16 precision for memory efficiency
+        precision=cfg.model["mixed_precision"], # Drop from float 32 to float 16 precision for memory efficiency
 
         logger=wandb_logger,
                     )
