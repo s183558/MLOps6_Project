@@ -1,6 +1,6 @@
 import torch
 from src.models.model import AlbertClassifier
-from src.data.dataset import LitDM
+from src.data.dataset import PredictLitDM
 import glob
 import os
 from transformers import AutoTokenizer
@@ -24,8 +24,8 @@ def predict(data, used_for_unit_test= False):
     tokenizer = AutoTokenizer.from_pretrained('albert-base-v1')
 
     # Get Lit Data Module
-    dm = LitDM(cfg, tokenizer = tokenizer)
-    dm.prepare_predict(data)
+    dm = PredictLitDM(tokenizer = tokenizer)
+    dm.load(data)
 
     # Predict
     trainer = Trainer(inference_mode = True)
