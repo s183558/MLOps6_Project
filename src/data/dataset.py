@@ -19,7 +19,11 @@ class LitDM(lit.LightningDataModule):
 
         self.cpu_cnt = os.cpu_count() or 2
 
-        self.prepare()
+    def setup(self, stage):
+        if stage == "fit" or stage == "train":
+            self.prepare()
+        elif stage == "prediction":
+            print("now I predict")
 
     def collect_dataset(self):
         """
@@ -88,17 +92,6 @@ class LitDM(lit.LightningDataModule):
         self.split_datasets()
         self.tokenize_data()
         self.get_tensor_datasets()
-    
-    def prepare_predict(self, input_data:[str]):
-        ## predict data
-        self.predict_encodings = self.tokenizer.batch_encode_plus(input_data,
-                                        max_length=self.cfg.data["token_max_length"],
-                                        padding='max_length',
-                                        truncation=True,
-                                        return_tensors='pt'
-                                    )
-        self.predict_dataset = TensorDataset(self.predict_encodings["input_ids"], 
-                                            self.predict_encodings["attention_mask"])
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(self.train_dataset,
@@ -112,6 +105,33 @@ class LitDM(lit.LightningDataModule):
     def test_dataloader(self) -> DataLoader:
         return DataLoader(self.test_dataset, batch_size=self.cfg.data["batch_size"], num_workers=self.cpu_cnt)
     
+    
+class PredictLitDM(lit.LightningDataModule):
+    """
+    https://lightning.ai/docs/pytorch/stable/data/datamodule.html
+
+    Load, proces and tokenize data
+    Collect dataloaders
+    """
+    def __init__(self, tokenizer = None):
+        super().__init__()
+        self.tokenizer = tokenizer
+
+        self.cpu_cnt = os.cpu_count() or 2
+
+    def load(self, input_data:[str]):
+        # lower input
+        input_data = [x.lower() for x in input_data]
+        # tokenize
+        self.predict_encodings = self.tokenizer.batch_encode_plus(input_data,
+                                        max_length=128,
+                                        padding='max_length',
+                                        truncation=True,
+                                        return_tensors='pt'
+                                    )
+        # as dataset
+        self.predict_dataset = TensorDataset(self.predict_encodings["input_ids"], 
+                                            self.predict_encodings["attention_mask"])
     def predict_dataloader(self) -> DataLoader:
-        return DataLoader(self.predict_dataset, batch_size=self.cfg.data["batch_size"], num_workers=self.cpu_cnt)
+        return DataLoader(self.predict_dataset, batch_size=64, num_workers=self.cpu_cnt)
     
