@@ -188,7 +188,7 @@ notebooks/
 
 # Wandb
 wandb
-/models
+/models/lightning_logs
 /mlops_for_the_win
 
 #lightening
