@@ -88,6 +88,17 @@ class LitDM(lit.LightningDataModule):
         self.split_datasets()
         self.tokenize_data()
         self.get_tensor_datasets()
+    
+    def prepare_predict(self, input_data:[str]):
+        ## predict data
+        self.predict_encodings = self.tokenizer.batch_encode_plus(input_data,
+                                        max_length=self.cfg.data["token_max_length"],
+                                        padding='max_length',
+                                        truncation=True,
+                                        return_tensors='pt'
+                                    )
+        self.predict_dataset = TensorDataset(self.predict_encodings["input_ids"], 
+                                            self.predict_encodings["attention_mask"])
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(self.train_dataset,
@@ -100,4 +111,7 @@ class LitDM(lit.LightningDataModule):
     
     def test_dataloader(self) -> DataLoader:
         return DataLoader(self.test_dataset, batch_size=self.cfg.data["batch_size"], num_workers=self.cpu_cnt)
+    
+    def predict_dataloader(self) -> DataLoader:
+        return DataLoader(self.predict_dataset, batch_size=self.cfg.data["batch_size"], num_workers=self.cpu_cnt)
     
