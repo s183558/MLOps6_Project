@@ -11,7 +11,7 @@ per_device_eval_batch_size: 16
 weight_decay: 0.01
 
 limit_train_batches: 0.2
-limit_val_batches: 0.8
+limit_val_batches: 0.2
 limit_test_batches: 1.0
 
 mixed_precision: "32-true"
