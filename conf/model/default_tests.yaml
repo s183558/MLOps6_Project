@@ -5,6 +5,8 @@ optimizer: Adam
 lr: 2e-5
 epochs: 2
 max_steps: 1
+checkpoints: False
+fast_dev_run: True
 
 limit_train_batches: 0.0006
 limit_val_batches: 0.003
