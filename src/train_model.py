@@ -37,13 +37,14 @@ def train_main(cfg:DictConfig):
 
     # Training
     trainer = Trainer(
+        fast_dev_run = cfg.model["fast_dev_run"], # Run 1 batch of train, val and test data if true
         default_root_dir=cfg.model["output_dir"],
         max_epochs=cfg.model["epochs"],
 
         callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
 
         check_val_every_n_epoch=1, # Evaluate after every epoch
-        enable_checkpointing = True, # Model checkpoints
+        enable_checkpointing = cfg.model['checkpoints'], # Model checkpoints
 
         limit_train_batches=cfg.model["limit_train_batches"], # Train at only 20% of the data
         limit_val_batches=cfg.model["limit_val_batches"],
