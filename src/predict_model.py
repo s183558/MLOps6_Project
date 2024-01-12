@@ -3,18 +3,15 @@ from src.models.model import AlbertClassifier
 from src.data.dataset import LitDM
 import glob
 import os
-from hydra import initialize, compose
-from omegaconf import DictConfig
 from transformers import AutoTokenizer
 from pytorch_lightning import Trainer
 
 
-def predict(data, config_fname="config.yaml"):
-    # Call the function with test config
-    with initialize(version_base=None, config_path="../conf"):
-        cfg = compose(config_name=config_fname)
+def predict(data, used_for_unit_test= False):
 
-    if cfg.model["fast_dev_run"]:
+    if used_for_unit_test:
+        model = AlbertClassifier(optimizer='Adam', learning_rate=1e-4)
+    else:
         # Find the latest file in the folder
         model_dir = 'models/lightning_logs/'
         latest_subdir = max(glob.glob(os.path.join(model_dir, '*/')), key=os.path.getmtime)
@@ -22,8 +19,6 @@ def predict(data, config_fname="config.yaml"):
         # Find the model name in the checkpoint folder and load in into the model
         model_names = [f for f in os.listdir(f"{latest_subdir}/checkpoints/") if os.path.isfile(os.path.join(f"{latest_subdir}/checkpoints/", f))][-1]
         model = AlbertClassifier.load_from_checkpoint(f"{latest_subdir}/checkpoints/{model_names}")
-    else:
-        model = AlbertClassifier(optimizer=cfg.model["optimizer"], learning_rate=cfg.model["lr"])
 
     # Specify tokenizer
     tokenizer = AutoTokenizer.from_pretrained('albert-base-v1')
