@@ -13,6 +13,7 @@ class LitDM(lit.LightningDataModule):
     Collect dataloaders
     """
     def __init__(self, cfg:dict, tokenizer = None):
+        print("Initiating Lighting Data Module")
         super().__init__()
         self.cfg = cfg
         self.tokenizer = tokenizer
@@ -20,9 +21,10 @@ class LitDM(lit.LightningDataModule):
         self.cpu_cnt = os.cpu_count() or 2
 
     def setup(self, stage):
-        if stage == "fit" or stage == "train":
+        #TODO use setup for predicito as well(previously stage was used but to get the internal value you need stage.FITTING.value)
+        if stage.FITTING.value == "fit" or stage.FITTING.value == "train":
             self.prepare()
-        elif stage == "prediction":
+        elif stage.FITTING.value == "prediction":
             print("now I predict")
 
     def collect_dataset(self):
@@ -87,6 +89,7 @@ class LitDM(lit.LightningDataModule):
                                     self.test_encodings["attention_mask"], 
                                     self.test_labels)
     def prepare(self):
+        print("Preparing Data")
         # TODO: use setup()
         self.collect_dataset()
         self.split_datasets()

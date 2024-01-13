@@ -19,6 +19,8 @@ class AlbertClassifier(pl.LightningModule):
         return self.model(ids, attention_mask=masks)
 
     def training_step(self, batch, batch_idx):
+        if batch_idx == 0:
+            print("Model device:", next(self.model.parameters()).device)
         ids, masks, labels = batch[0], batch[1], batch[2]
         output = self.model(
             ids,
