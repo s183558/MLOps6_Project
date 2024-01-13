@@ -1,3 +1,5 @@
+import os
+
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pytorch_lightning.loggers import WandbLogger
@@ -12,6 +14,8 @@ from omegaconf import DictConfig
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
 def train_main(cfg:DictConfig):
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
     # Specify tokenizer
     tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
 
@@ -53,6 +57,10 @@ def train_main(cfg:DictConfig):
         num_sanity_val_steps=0, # Do not perform sanity check
         #profiler="simple",
         precision=cfg.model["mixed_precision"], # Drop from float 32 to float 16 precision for memory efficiency
+        
+        # Gpu if avaialable
+        devices=1,
+        accelerator="auto",
 
         logger=wandb_logger,
                     )
@@ -62,5 +70,14 @@ def train_main(cfg:DictConfig):
     # Evaluation
     trainer.test(model,dm)
 
+@hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
+def data_testing(cfg:DictConfig):
+    # Specify tokenizer
+    tokenizer =  AutoTokenizer.from_pretrained('albert-base-v1')
+
+    # Get Lit Data Module
+    dm = LitDM(cfg, tokenizer =tokenizer)
+
 if __name__ == '__main__':
     train_main()
+    #data_testing()
