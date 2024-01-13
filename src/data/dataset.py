@@ -119,7 +119,6 @@ class PredictLitDM(lit.LightningDataModule):
     def __init__(self, tokenizer = None):
         super().__init__()
         self.tokenizer = tokenizer
-
         self.cpu_cnt = os.cpu_count() or 2
 
     def load(self, input_data:[str]):
