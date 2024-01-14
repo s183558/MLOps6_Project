@@ -20,8 +20,7 @@ Unless otherwise specified, all commands listed in this documentation are intend
 <br>
 
 ### 3) Override entry point and run in interactive mode:
-(usefull for debugging)  
-🟢 docker run -it --entrypoint sh trainer:latest
+🐞 docker run -it --entrypoint sh trainer:latest
 <br>
 
 ### 4) Run containers using docker-compose:
@@ -29,6 +28,20 @@ Unless otherwise specified, all commands listed in this documentation are intend
 
 🟢 docker-compose run --name train_instance trainer:latest  
 🟢 docker-compose run --name predict_instance predict:latest  
+<br>
+
+---------------------------------------------------- **DOCKER (FastAPI)** -------------------------------------------------
+### 1) For debugging before creating docker image (run under /app):
+🐞 uvicorn --reload --port 8000 main_fastapi:app  
+<br>
+
+### 2) Build and run:
+🟢 docker build -f dockerfiles/fastapi.dockerfile . -t fastapi:latest  
+🟢 docker run --name unique_container_name -p 80:80 fastapi:latest
+<br>
+
+### 3) Run in interative mode:
+🐞 docker run -it --name fastapi_container fastapi:latest /bin/bash
 <br>
 
  ---------------------------------------------------- **Pytest & Coverage** ----------------------------------------------------
