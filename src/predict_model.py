@@ -18,15 +18,12 @@ def predict(data, used_for_unit_test= False):
         # Find the latest file in the folder
         model_dir = 'models/lightning_logs/'        
 
-        print(f'model_dir:{model_dir}')
         # Note: UGGLY workaround to allow predict() find the model.
         # main_fastapi.py is called from /app 
         if current_dir.name == 'app':
             model_dir = '../models/lightning_logs'
-        print(f'model_dir:{model_dir}')
       
         subdir_list = glob.glob(os.path.join(model_dir, '*/'))
-        print(f'model_dir: {model_dir}')
 
         if not subdir_list:
             raise ValueError(f'No model directories found in: {model_dir}.')
