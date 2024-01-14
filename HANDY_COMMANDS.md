@@ -33,6 +33,8 @@ Unless otherwise specified, all commands listed in this documentation are intend
 ---------------------------------------------------- **DOCKER (FastAPI)** -------------------------------------------------
 ### 1) For debugging before creating docker image (run under /app):
 🐞 uvicorn --reload --port 8000 main_fastapi:app  
+**Note:** Append <docs> to the address to access the FastAPI's GUI in the browser:   
+e.g. http://127.0.0.1:8000/docs  
 <br>
 
 ### 2) Build and run:
