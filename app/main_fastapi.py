@@ -8,11 +8,7 @@ from src.predict_model import predict
 
 app = FastAPI()
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id}
-
-@app.get("/text_model/")
+@app.get("/predictions/")
 async def make_prediction(data: str):
     try:
         prediction_result = predict([data])
