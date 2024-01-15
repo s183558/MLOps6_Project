@@ -1,4 +1,4 @@
-.PHONY: create_environment requirements dev_requirements clean data build_documentation serve_documentation
+.PHONY: create_environment requirements dev_requirements clean data train predict build_documentation serve_documentation
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -45,7 +45,9 @@ data:
 train:
 	python $(PROJECT_NAME)/train_model.py
 
-
+## Predict data
+predict:
+	python $(PROJECT_NAME)/predict_model.py
 
 #################################################################################
 # Documentation RULES                                                           #
