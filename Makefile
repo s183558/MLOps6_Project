@@ -1,4 +1,4 @@
-.PHONY: create_environment requirements dev_requirements clean data train predict build_documentation serve_documentation
+.PHONY: create_environment requirements dev_requirements clean data train predict build_fastapi build_documentation serve_documentation
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -48,6 +48,10 @@ train:
 ## Predict data
 predict:
 	python $(PROJECT_NAME)/predict_model.py
+
+## Build fastapi container
+build_fastapi:
+	docker build -f dockerfiles/fastapi.dockerfile . -t fastapi:latest
 
 #################################################################################
 # Documentation RULES                                                           #
