@@ -14,3 +14,6 @@ ruff >=0.1.11 #unsure if this is actually a requirement, however present in .tom
 wandb >= 0.16.1
 google-api-python-client >= 2.112.0
 pytest >= 7.4.4
+uvicorn >= 0.25.0
+fastapi >= 0.109.0
+
