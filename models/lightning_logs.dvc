@@ -1,6 +1,60 @@
 outs:
-- md5: d17071c83e5a12f45c8c914f21ff4ce5.dir
-  size: 280515927
-  nfiles: 8
-  hash: md5
+- hash: md5
   path: lightning_logs
+  files:
+  - relpath: version_0/hparams.yaml
+    md5: ea61339bcdcebd69c94f99712221a234
+    size: 41
+    cloud:
+      remote_storage:
+        etag: 0888fcd4f187e283031001
+        version_id: '1705413371575816'
+  - relpath: version_1/hparams.yaml
+    md5: ea61339bcdcebd69c94f99712221a234
+    size: 41
+    cloud:
+      remote_storage:
+        etag: 08dbb1d3f187e283031001
+        version_id: '1705413371549915'
+  - relpath: version_2/checkpoints/epoch=1-step=10.ckpt
+    md5: dd89c4c01b28f159a9ca2a35e4a9b675
+    size: 140257750
+    cloud:
+      remote_storage:
+        etag: 08d5f3aef387e283031001
+        version_id: '1705413375146453'
+  - relpath: version_2/hparams.yaml
+    md5: ea61339bcdcebd69c94f99712221a234
+    size: 41
+    cloud:
+      remote_storage:
+        etag: 08bcaad0f187e283031001
+        version_id: '1705413371499836'
+  - relpath: version_2/metrics.csv
+    md5: d99451a56497fe20e37dc33dce635353
+    size: 104
+    cloud:
+      remote_storage:
+        etag: 08c2d0c7f187e283031001
+        version_id: '1705413371357250'
+  - relpath: version_3/checkpoints/epoch=1-step=44.ckpt
+    md5: 5db3d545822cca3f91d6aadb9307dadc
+    size: 140257750
+    cloud:
+      remote_storage:
+        etag: 08bef08bf387e283031001
+        version_id: '1705413374572606'
+  - relpath: version_3/hparams.yaml
+    md5: ea61339bcdcebd69c94f99712221a234
+    size: 41
+    cloud:
+      remote_storage:
+        etag: 08f1c8d4f187e283031001
+        version_id: '1705413371569265'
+  - relpath: version_3/metrics.csv
+    md5: 095e9aae9268ba0aef802221d434eb79
+    size: 159
+    cloud:
+      remote_storage:
+        etag: 08deb1d3f187e283031001
+        version_id: '1705413371549918'
