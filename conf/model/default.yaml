@@ -4,7 +4,7 @@ wandb_logging: disabled
 optimizer: Adam
 lr: 2e-5
 epochs: 2
-checkpoints: False
+checkpoints: True
 fast_dev_run: True
 
 per_device_train_batch_size: 16
