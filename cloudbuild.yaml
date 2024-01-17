@@ -1,5 +1,19 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/mlops6-410910/testing', '.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/mlops6-410910/testing']
+  # Step to pull the service account key secret from Secret Manager
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args: ['-c', 'gcloud secrets versions access latest --secret="ServiceAccount_data" > /workspace/sa-key.json']
+  
+  # Build step
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '--build-arg', 'GCP_KEY_FILE=sa-key.json', '-t', 'gcr.io/mlops6-410910/testing', '.']
+  
+  # Push step
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/mlops6-410910/testing']
+
+# Define the secret to be available in the build environment
+availableSecrets:
+  secretManager:
+  - versionName: projects/103212519156/secrets/ServiceAccount_data/versions/latest
+    env: 'GCP_KEY_FILE'
