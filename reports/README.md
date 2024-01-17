@@ -256,10 +256,12 @@ In total we implemented four ``test_*.py`` files being the central parts of the 
 
 According to the coverage report 87% of the code was covered/tested. The following files were not covered 100%:  
 
-<b>``src/data/dataset.py``</b>:      94%   
-<b>``src/data/make_dataset.py``</b>: 91%   
-<b>``src/predict_model.py``</b>:     52%   
-<b>``src/train_model.py``</b>:       78%   
+<code>
+src/data/dataset.py:      94%   
+src/data/make_dataset.py: 91%   
+src/predict_model.py:     52%   
+src/train_model.py:       78%   
+</code>
 
 We could have made more test to come closer to 100% but at least we have now the proper workflow set up correctly. It is worth to mention that 100% coverage does not guarantee error-free code for various reasons:  
 1) The testing code could be wrong.  
@@ -317,13 +319,14 @@ We decided to trigger the training in Google Cloud manually to avoid exceeding t
 
 The test summary of this [job](https://github.com/s183558/MLOps6_Project/actions/runs/7504814581/job/20432714507#step:10:57) in Github illustrates the value of continuous integration:
 
+<code>
 =========================== short test summary info ============================  
 ERROR tests/test_train_mock.py    
 ERROR tests/test_train_real_data.py   
 !!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!   
 ============================== 2 errors in 3.22s ===============================  
 Error: Process completed with exit code 2.  
-
+</code>
 
 When a pull request from a feature branch to the main branch was made, the ``test_on_push.yml`` workflow was triggered. The workflow acts as a safeguard, catching the error in the pull request before introducing the error in the main branch and then propagating the error to all the members.
 
@@ -345,7 +348,22 @@ When a pull request from a feature branch to the main branch was made, the ``tes
 >
 > Answer:
 
---- question 12 fill here ---
+The experiments were configured using Hydra as shown below:
+
+<code>
+@hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")  
+def train_main(cfg:DictConfig):
+    
+    [...]
+
+    # Model
+    learning_rate = cfg.model["lr"]
+    optimizer = cfg.model["optimizer"]
+
+    [...]
+</code>
+The decorator fetches the configuration yaml file where the parameters are specified. Then in the body of ``train_main`` the parameters are avaiable via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``optimizer``. It is an efficient way to deal with multiple experiments without having to modify the code.
+
 
 ### Question 13
 
