@@ -1,3 +1,9 @@
+# Define the secret to be available in the build environment
+availableSecrets:
+  secretManager:
+  - versionName: projects/103212519156/secrets/ServiceAccount_data/versions/latest
+    env: 'GCP_KEY_FILE'
+
 steps:
   # Step to pull the service account key secret from Secret Manager
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -11,9 +17,3 @@ steps:
   # Push step
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/mlops6-410910/testing']
-
-# Define the secret to be available in the build environment
-availableSecrets:
-  secretManager:
-  - versionName: projects/103212519156/secrets/ServiceAccount_data/versions/latest
-    env: 'GCP_KEY_FILE'
