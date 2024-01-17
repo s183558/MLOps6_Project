@@ -482,7 +482,8 @@ Having overcome the initial challenges, the biggest challenges encountered in th
 
 - Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples in the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
 
-- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial&error approach. Google Cloud has a large amount of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious.
+- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial&error approach. Google Cloud has a large amount of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API but we did not get an approval on time. Hence we end up using Compute Engine service as a solution. 
+
 
 
 ### Question 27
@@ -500,10 +501,10 @@ Having overcome the initial challenges, the biggest challenges encountered in th
 >
 > Answer:
 
-Student s135313 was in charge of 
-Student s151988 was in charge of
-Student s230284 was in charge of 
-Student s183558 was in charge of 
+Student s135313 was in charge of dealing with the Google Cloud Services and model training.
+Student s151988 was in charge of the FastAPI and writing the documentation.
+Student s230284 was in charge of dealing with the Google Cloud Services and model training.
+Student s183558 was in charge of dealing with pytests, the Google Cloud Services and model training.
 
-
+Moreover all the members contributed with the general workflow, setting up the different configurations such as dockerfiles.
 
