@@ -1,4 +1,4 @@
-.PHONY: create_environment requirements dev_requirements clean data build_documentation serve_documentation
+.PHONY: create_environment requirements dev_requirements clean data train predict build_fastapi build_trainer build_gpu_trainer build_predict build_documentation serve_documentation
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -45,7 +45,25 @@ data:
 train:
 	python $(PROJECT_NAME)/train_model.py
 
+## Predict data
+predict:
+	python $(PROJECT_NAME)/predict_model.py
 
+## Build fastapi container
+build_fastapi:
+	docker build -f dockerfiles/fastapi.dockerfile . -t fastapi:latest
+
+## Build trainer container
+build_trainer:
+	docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest
+
+## Build gpu trainer container
+build_gpu_trainer:
+	docker build -f dockerfiles/gpu_train_model.dockerfile . -t gpu_trainer:latest
+
+## Build predict container
+build_predict:
+	docker build -f dockerfiles/predict_model.dockerfile . -t predict:latest
 
 #################################################################################
 # Documentation RULES                                                           #
