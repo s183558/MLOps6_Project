@@ -378,7 +378,21 @@ The decorator fetches the configuration yaml file where the parameters are speci
 >
 > Answer:
 
---- question 13 fill here ---
+In order to reproduce the experiments we made use of Hydra as described in the previous question. The workflow to run an experiement is the following:  
+
+  1) It is assumed that the conda environment is activated and that all the necessary dependencies are installed.  
+  2) The parameter values in the config file are set up.  
+  3) An experiment is run with ``make train`` (where the model is trained with the specified parameters).  
+  4) The model is saved in Google Storage using DVC together with the corresponding commit (that also includes the configuration file):  
+    
+    git pull (to avoid possible conflicts)
+    dvc add models/
+    git add models.dvc .gitignore
+    git add config.yaml
+    git commit -m "Experiment X"
+    dvc push
+    git push    
+
 
 ### Question 14
 
