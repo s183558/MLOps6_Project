@@ -1,7 +1,7 @@
 # Define the secret to be available in the build environment
 availableSecrets:
   secretManager:
-  - versionName: projects/103212519156/secrets/ServiceAccount_data/versions/latest
+  - versionName: projects/103212519156/secrets/ServiceAccount_data
 
 steps:
   # Step to pull the service account key secret from Secret Manager
