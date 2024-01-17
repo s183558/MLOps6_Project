@@ -2,7 +2,6 @@
 availableSecrets:
   secretManager:
   - versionName: projects/103212519156/secrets/ServiceAccount_data/versions/latest
-    env: 'GCP_KEY_FILE'
 
 steps:
   # Step to pull the service account key secret from Secret Manager
@@ -12,7 +11,7 @@ steps:
   
   # Build step
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '--build-arg', 'GCP_KEY_FILE=sa-key.json', '-t', 'gcr.io/mlops6-410910/testing', '.']
+    args: ['build', '-t', 'gcr.io/mlops6-410910/testing', '.']
   
   # Push step
   - name: 'gcr.io/cloud-builders/docker'
