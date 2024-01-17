@@ -234,14 +234,12 @@ We did not implement any rules for code quality, although we installed for examp
 >
 > Answer:
 
-In total we implemented four ``test_*.py`` files and 87% of the code was covered according to the coverage report. The following files were not covered 100%:  
+In total we implemented four ``test_*.py`` files being the central parts of the code to test: 
 
-<b>``src/data/dataset.py``</b>:      94%   
-<b>``src/data/make_dataset.py``</b>: 91%   
-<b>``src/predict_model.py``</b>:     52%   
-<b>``src/train_model.py``</b>:       78%   
+<b>Data processing</b>: Before training we want to ensure that the correct data/input is available.  
+<b>Training logic</b>: We considered that the most important part to test was the training logic. Therefore two types of tests where made. One with a subset of the real training data and an additional test to verify whether the functions in the training loop are called appropiately.  
+<b>Prediction logic</b>: Simple test that verifies that the return data size and type are correct.  
 
-We considered that the most important part to test was the training logic. Therefore two types of tests where made. One with a subset of the real training data and an additional test to verify whether the functions in the training loop are called appropiately.
 
 ### Question 8
 
@@ -256,7 +254,17 @@ We considered that the most important part to test was the training logic. There
 >
 > Answer:
 
---- question 8 fill here ---
+According to the coverage report 87% of the code was covered/tested. The following files were not covered 100%:  
+
+<b>``src/data/dataset.py``</b>:      94%   
+<b>``src/data/make_dataset.py``</b>: 91%   
+<b>``src/predict_model.py``</b>:     52%   
+<b>``src/train_model.py``</b>:       78%   
+
+We could have made more test to come closer to 100% but at least we have now the proper workflow set up correctly. It is worth to mention that 100% coverage does not guarantee error-free code for various reasons:  
+1) The testing code could be wrong.  
+2) The test may inadvertly rely on that all ressources are available (e.g. files to be loaded). If the tested code does not implement the necessary error handling then no error is catched until the code is deployed in production.  
+3) The tests above are ``unittest`` which tests the functions isolated from the world. Integration tests are also necessary to ensure that the interfaces between the functions and modules work as intented.
 
 ### Question 9
 
