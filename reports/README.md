@@ -234,7 +234,14 @@ We did not implement any rules for code quality, although we installed for examp
 >
 > Answer:
 
+In total we implemented four ``test_*.py`` files and 87% of the code was covered according to the coverage report. The following files were not covered 100%:  
 
+<b>``src/data/dataset.py``</b>:      94%   
+<b>``src/data/make_dataset.py``</b>: 91%   
+<b>``src/predict_model.py``</b>:     52%   
+<b>``src/train_model.py``</b>:       78%   
+
+We considered that the most important part to test was the training logic. Therefore two types of tests where made. One with a subset of the real training data and an additional test to verify whether the functions in the training loop are called appropiately.
 
 ### Question 8
 
