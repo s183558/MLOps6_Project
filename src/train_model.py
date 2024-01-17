@@ -79,7 +79,7 @@ def data_testing(cfg:DictConfig):
     dm = LitDM(cfg, tokenizer =tokenizer)
 
 if __name__ == '__main__':
-    #train_main()
+    train_main()
     #data_testing()
     # from google.cloud import storage
 
@@ -91,3 +91,4 @@ if __name__ == '__main__':
     #     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     #     blob.download_to_filename(local_path)
     #     print(f"Downloaded {blob.name} to {local_path}")
+    
