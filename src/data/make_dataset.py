@@ -68,4 +68,5 @@ def load_train_df(file: str) -> pd.DataFrame:
 
 
 if __name__=="__main__":
+    load_bucket()
     preprocess_data("data_raw_train", store=True)
