@@ -130,7 +130,13 @@ s135313, s151988, s230284, s183558
 >
 > Answer:
 
---- question 3 fill here ---
+We used multiple third-party framekworks. To name a few:
+
+- <b>wandb</b>: to track the training of the model, especifically we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log the learning rate.
+- <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator.
+- <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
+- <b>FastAPI</b>: a fast way to build an API (with a simple web based GUI) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded with a decorator serving as the interface to FastAPI.
+
 
 ## Coding environment
 
@@ -149,7 +155,18 @@ s135313, s151988, s230284, s183558
 >
 > Answer:
 
---- question 4 fill here ---
+We used conda to manage the dependecies of the project. To be able to replicate the results of our project the following four steps are necessary.
+
+- ``git clone git@github.com:s183558/MLOps6_Project.git .``: to clone our github project.
+
+- ``make create_environment``: to create a conda environment with a suitable python version.
+
+- ``conda activate src``: to activate the created conda environment (called in this case ``src``).
+
+- ``make dev_requirements``: to install all the dependencies (also the development dependencies) to be able to run the code.
+
+Furthermore, there are some credentials necessary to e.g. be able to pull the data from Google Storage using ``dvc pull``. 
+
 
 ### Question 5
 
@@ -164,7 +181,29 @@ s135313, s151988, s230284, s183558
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+After creating the environment and installing the dependencies the project was indeed initialized using the provided cookiecutter template from the [course](https://github.com/SkafteNicki/mlops_template). 
+
+.  
+├── data/  
+├── dockerfiles/  
+├── docs/  
+├── Makefile  
+├── models/  
+├── pyproject.toml  
+├── README.md  
+├── reports/  
+├── requirements_dev.txt  
+├── requirements.txt  
+├── src/  
+└── tests/  
+
+The structure above was the starting point of our project, being the most relevant folders the following:  
+
+-  <b>``data/``</b>: contains the .dvc pointers to the google storage to access the data.  
+-  <b>``models/``</b>:  contains the generated trained models (bookkept by Pytorch Lightning).  
+-  <b>``src/``</b>:  contains the source code of the project.  
+-  <b>``tests/``</b>:  contains the tests to be executed.  
+
 
 ### Question 6
 
@@ -175,7 +214,8 @@ s135313, s151988, s230284, s183558
 >
 > Answer:
 
---- question 6 fill here ---
+We did not implement any rules for code quality, although we installed for example ``ruff`` which helps to comply with PEP8 guidelines. We considered that it was not that necessary for our project. However for larger projects it is recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). The most important is that having a set of rules ensures consistency and it is easier for the members to understand eachothers code.
+
 
 ## Version control
 
@@ -194,7 +234,7 @@ s135313, s151988, s230284, s183558
 >
 > Answer:
 
---- question 7 fill here ---
+
 
 ### Question 8
 
@@ -476,7 +516,7 @@ We agreed in the group at the begining of the project to consider the 'main' bra
 >
 > Answer:
 
-The initial challenge we had at the begining was that all the group members should be able to run the code locally with the same results. It was quickly solved once the mamba enviroment was set up correctly where the list of requirements was continuously updated locally and remotely.
+The initial challenge we had at the begining was that all the group members should be able to run the code locally with the same results. It was quickly solved once the conda enviroment was set up correctly where the list of requirements was continuously updated locally and remotely.
 
 Having overcome the initial challenges, the biggest challenges encountered in the project were:
 
