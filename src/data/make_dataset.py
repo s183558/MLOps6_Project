@@ -3,6 +3,7 @@ import pandas as pd
 import logging
 import src.common.log_config 
 import torch
+from google.cloud import storage
 
 logger=logging.getLogger(__name__)
 
@@ -23,9 +24,27 @@ def processing(df: pd.DataFrame) -> pd.DataFrame:
 def get_project_dir() -> str:
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+def load_bucket():
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("mlops6_tweets")
+    blobs = bucket.list_blobs(prefix="data")
+    project_dir = get_project_dir()
+    for blob in blobs:
+        local_path = os.path.join(project_dir, blob.name)
+        blob.download_to_filename(local_path)
+
 def preprocess_data(file, store=False) -> pd.DataFrame:
-    # Get Data
     project_directory = get_project_dir()
+
+    # Create raw directory(for git)
+    raw_dir = os.path.join(project_directory, "data/raw")
+
+    # Load Bucket
+    data_content = os.listdir(raw_dir)
+    if data_content == []:
+        load_bucket()
+
+    # Get Data
     data_path  = f"{project_directory}/data/raw/"
     train_df = pd.read_csv(f'{data_path}{file}.csv')
 
@@ -41,12 +60,12 @@ def preprocess_data(file, store=False) -> pd.DataFrame:
     return train_df
 
 def load_train_df(file: str) -> pd.DataFrame:
-    logger.info("Loaded processed datafile")
     project_directory = get_project_dir()
     train_df = pd.read_pickle(f"{project_directory}/data/processed/{file}.pkl")
+    logger.info("Loaded processed datafile")
 
     return train_df
 
 
-if __name__=="__main__":  
+if __name__=="__main__":
     preprocess_data("data_raw_train", store=True)

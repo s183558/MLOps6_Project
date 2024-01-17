@@ -8,6 +8,7 @@ import wandb
 from transformers import AutoTokenizer
 
 from src.data.dataset import LitDM
+from src.data.make_dataset import get_project_dir
 from src.models.model import AlbertClassifier
 from src.utils.utils import access_secret_version
 
@@ -86,3 +87,4 @@ def data_testing(cfg:DictConfig):
 if __name__ == '__main__':
     train_main()
     #data_testing()
+    
