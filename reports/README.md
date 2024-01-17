@@ -295,7 +295,7 @@ We agreed in the group at the begining of the project to consider the 'main' bra
 >
 > Answer:
 
---- question 10 fill here ---
+We used DVC to manage the raw training data (not the processed data) and the models. It helped us in a practical way allowing us to separate the code (versioned with git in a github repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
 
 ### Question 11
 
