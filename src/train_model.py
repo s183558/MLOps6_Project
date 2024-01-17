@@ -3,11 +3,13 @@ import os
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pytorch_lightning.loggers import WandbLogger
+import wandb
 
 from transformers import AutoTokenizer
 
 from src.data.dataset import LitDM
 from src.models.model import AlbertClassifier
+from src.utils.utils import access_secret_version
 
 import hydra
 from omegaconf import DictConfig
@@ -29,6 +31,9 @@ def train_main(cfg:DictConfig):
 
     # Setup Wandb logging
     if cfg.model.wandb_logging == "enabled": # Oh I know. This was a bool, and a good one. But Hydra in Docker doesnt only allow str, float or int.
+        API_key = access_secret_version()
+        wandb.login(key=API_key)
+        
         wandb_logger = WandbLogger(log_model="all",
                                 project="mlops_for_the_win",
                                 entity='mlops_for_the_win',
