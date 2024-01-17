@@ -311,7 +311,22 @@ We used DVC to manage the raw training data (not the processed data) and the mod
 >
 > Answer:
 
---- question 11 fill here ---
+We created a github workflow [(.github/workflows/test_on_push.yml)](https://github.com/s183558/MLOps6_Project/blob/main/.github/workflows/test_on_push.yml) that is triggered when there is a push to the ``main`` branch and when a pull request is made to the ``main`` branch. We kept it fairly simple where only a runner is built (Ubuntu based) and only a python version is tested. We made use of cache to improve the speed of subsequent builds. The unittests are tested again since any merge into main can risk to break the build.
+
+We decided to trigger the training in Google Cloud manually to avoid exceeding the free quota. However in a more realistic scenario, we could have the ``main`` branch, as many features branches as necessary, a developer branch and a branch with the sole purpose to train the model. The isolation of the training activity in a branch would allow to better control the available quota and/or ressources.
+
+The test summary of this [job](https://github.com/s183558/MLOps6_Project/actions/runs/7504814581/job/20432714507#step:10:57) in Github illustrates the value of continuous integration:
+
+=========================== short test summary info ============================  
+ERROR tests/test_train_mock.py    
+ERROR tests/test_train_real_data.py   
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!   
+============================== 2 errors in 3.22s ===============================  
+Error: Process completed with exit code 2.  
+
+
+When a pull request from a feature branch to the main branch was made, the ``test_on_push.yml`` workflow was triggered. The workflow acts as a safeguard, catching the error in the pull request before introducing the error in the main branch and then propagating the error to all the members.
+
 
 ## Running code and tracking experiments
 
