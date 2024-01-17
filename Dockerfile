@@ -27,4 +27,4 @@ WORKDIR /
 
 RUN pip install -e .
 
-ENTRYPOINT ["python", "-u", "src/train_model.py", "make train", "dvc add models/best_model.ckpth && git add best_model.dvc && git commit -m 'Automatic model update' && dvc push"]
+ENTRYPOINT ["python", "-u", "src/train_model.py", "dvc add models/best_model.ckpth && git add best_model.dvc && git commit -m 'Automatic model update' && dvc push"]
