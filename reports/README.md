@@ -132,7 +132,7 @@ s135313, s151988, s230284, s183558
 
 We used multiple third-party framekworks. To name a few:
 
-- <b>wandb</b>: to track the training of the model, especifically we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log the learning rate.
+- <b>wandb</b>: to track the training of the model, especifically we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
 - <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator.
 - <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
 - <b>FastAPI</b>: a fast way to build an API (with a simple web based GUI) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded with a decorator serving as the interface to FastAPI.
@@ -409,7 +409,15 @@ In order to reproduce the experiments we made use of Hydra as described in the p
 >
 > Answer:
 
---- question 14 fill here ---
+In order to track the experiments and to visualize them we used the third-party tool called [Weights & Biases](https://wandb.ai/) previously described in question 13. The figure below shows the results of one experiment (where the model was trained with a set of parameters as specified in the configuration yaml file):
+
+![treasured_water](figures/wand_treasured_water.png)
+
+Each experiment gets an automatic generated name for easier recognition. In this case the experiment is called ``treasured_water-12``. The included plots display how four variables change along training, being: ``epoch``, ``train_loss``, ``val_accuracy`` and ``val_loss``.  
+
+The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall idea of how accurate the model to classify the tweets from the validation dataset (two labels are possible:'catastrophe' and 'not catastrophe'). The most important variables in the plot are ``train_loss`` and ``val_loss``. Ideally we would like to see a gradual reduction/improvement of the ``train_loss`` and the same for ``val_loss``. In order to avoid overfitting, an early stop strategy was enabled. It is fair to say that based on the presented plot, the model does not seem to learn, although at the end the group managed to train a model which was somewhat able to classify the tweets. We can also mention that we only used a very small portion of all the capabilities of W&B. 
+
+
 
 ### Question 15
 
