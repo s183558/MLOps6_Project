@@ -95,8 +95,8 @@ end of the project.
 ### Additional
 
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [ ] Uploaded all your code to github
+* [X] Make sure all group members have a understanding about all parts of the project
+* [X] Uploaded all your code to github
 
 ## Group information
 
@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+6
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,8 @@ end of the project.
 >
 > Answer:
 
---- question 2 fill here ---
+s135313, s151988, s230284, s183558 
+
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -129,7 +130,13 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+We used multiple third-party framekworks. To name a few:
+
+- <b>wandb</b>: to track the training of the model, especifically we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log the learning rate.
+- <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator.
+- <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
+- <b>FastAPI</b>: a fast way to build an API (with a simple web based GUI) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded with a decorator serving as the interface to FastAPI.
+
 
 ## Coding environment
 
@@ -148,7 +155,18 @@ end of the project.
 >
 > Answer:
 
---- question 4 fill here ---
+We used conda to manage the dependecies of the project. To be able to replicate the results of our project the following four steps are necessary.
+
+- ``git clone git@github.com:s183558/MLOps6_Project.git .``: to clone our github project.
+
+- ``make create_environment``: to create a conda environment with a suitable python version.
+
+- ``conda activate src``: to activate the created conda environment (called in this case ``src``).
+
+- ``make dev_requirements``: to install all the dependencies (also the development dependencies) to be able to run the code.
+
+Furthermore, there are some credentials necessary to e.g. be able to pull the data from Google Storage using ``dvc pull``. 
+
 
 ### Question 5
 
@@ -163,7 +181,29 @@ end of the project.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+After creating the environment and installing the dependencies the project was indeed initialized using the provided cookiecutter template from the [course](https://github.com/SkafteNicki/mlops_template). 
+
+.  
+├── data/  
+├── dockerfiles/  
+├── docs/  
+├── Makefile  
+├── models/  
+├── pyproject.toml  
+├── README.md  
+├── reports/  
+├── requirements_dev.txt  
+├── requirements.txt  
+├── src/  
+└── tests/  
+
+The structure above was the starting point of our project, being the most relevant folders the following:  
+
+-  <b>``data/``</b>: contains the .dvc pointers to the google storage to access the data.  
+-  <b>``models/``</b>:  contains the generated trained models (bookkept by Pytorch Lightning).  
+-  <b>``src/``</b>:  contains the source code of the project.  
+-  <b>``tests/``</b>:  contains the tests to be executed.  
+
 
 ### Question 6
 
@@ -174,7 +214,8 @@ end of the project.
 >
 > Answer:
 
---- question 6 fill here ---
+We did not implement any rules for code quality, although we installed for example ``ruff`` which helps to comply with PEP8 guidelines. We considered that it was not that necessary for our project. However for larger projects it is recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). The most important is that having a set of rules ensures consistency and it is easier for the members to understand eachothers code.
+
 
 ## Version control
 
@@ -193,7 +234,7 @@ end of the project.
 >
 > Answer:
 
---- question 7 fill here ---
+
 
 ### Question 8
 
@@ -223,7 +264,8 @@ end of the project.
 >
 > Answer:
 
---- question 9 fill here ---
+We agreed in the group at the begining of the project to consider the 'main' branch as the production branch so it should in theory always be able to run without errors. Therefore we strived to do most of the work in "features" branches. Once we could verify the python tests passed locally, the branch was pushed to the remote repo. Afterwards, depending on the amount of changes, either a group peer reviewed the code in cooperation with the author, or the author simply merged the branch into the main branch and then verifyied the main branch worked as intented. 
+
 
 ### Question 10
 
@@ -474,7 +516,15 @@ end of the project.
 >
 > Answer:
 
---- question 26 fill here ---
+The initial challenge we had at the begining was that all the group members should be able to run the code locally with the same results. It was quickly solved once the conda enviroment was set up correctly where the list of requirements was continuously updated locally and remotely.
+
+Having overcome the initial challenges, the biggest challenges encountered in the project were:
+
+- Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples in the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
+
+- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial&error approach. Google Cloud has a large amount of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API but we did not get an approval on time. Hence we end up using Compute Engine service as a solution. 
+
+
 
 ### Question 27
 
@@ -491,4 +541,10 @@ end of the project.
 >
 > Answer:
 
---- question 27 fill here ---
+Student s135313 was in charge of dealing with the Google Cloud Services and model training.
+Student s151988 was in charge of the FastAPI and writing the documentation.
+Student s230284 was in charge of dealing with the Google Cloud Services and model training.
+Student s183558 was in charge of dealing with pytests, the Google Cloud Services and model training.
+
+Moreover all the members contributed with the general workflow, setting up the different configurations such as dockerfiles.
+
