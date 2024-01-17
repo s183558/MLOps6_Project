@@ -7,6 +7,7 @@ from pytorch_lightning.loggers import WandbLogger
 from transformers import AutoTokenizer
 
 from src.data.dataset import LitDM
+from src.data.make_dataset import get_project_dir
 from src.models.model import AlbertClassifier
 
 import hydra
@@ -81,14 +82,4 @@ def data_testing(cfg:DictConfig):
 if __name__ == '__main__':
     train_main()
     #data_testing()
-    # from google.cloud import storage
-
-    # storage_client = storage.Client()
-    # bucket = storage_client.bucket("mlops6_tweets")
-    # blobs = bucket.list_blobs(prefix="data")  # Get list of files in the folder
-    # for blob in blobs:
-    #     local_path = os.path.join(local_dir, blob.name)
-    #     os.makedirs(os.path.dirname(local_path), exist_ok=True)
-    #     blob.download_to_filename(local_path)
-    #     print(f"Downloaded {blob.name} to {local_path}")
     
