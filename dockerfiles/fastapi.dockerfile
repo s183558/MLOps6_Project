@@ -10,9 +10,19 @@ WORKDIR /fastapi_proj
 COPY app/requirements_fastapi.txt .
 RUN pip install --no-cache-dir --upgrade -r requirements_fastapi.txt
 
+COPY pyproject.toml .
 COPY app/ ./app/
 COPY models/ ./models/
 COPY src/ ./src/
+
+RUN pip install -e .
+
+# Set the environment variable for Google Cloud authentication
+COPY sa_key.json sa_key.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=sa_key.json
+
+# Fetch models
+RUN python src/data/make_dataset.py models
 
 WORKDIR /fastapi_proj/app
 
