@@ -18,3 +18,8 @@ pytest >= 7.4.4
 uvicorn >= 0.25.0
 fastapi >= 0.109.0
 google-cloud-storage
+
+fastapi>=0.109.0
+uvicorn>=0.25.0
+opencv-python>=4.9.0.80
+python-multipart>=0.0.6

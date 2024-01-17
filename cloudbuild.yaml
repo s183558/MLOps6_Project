@@ -4,10 +4,14 @@ steps:
     entrypoint: 'bash'
     args: ['-c', 'gcloud secrets versions access latest --secret="ServiceAccount_data" --project="103212519156" > /workspace/sa_key.json']
   
-  # Build step
+  # Build and Push Training
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/mlops6-410910/testing', '.']
-  
-  # Push step
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/mlops6-410910/testing']
+
+  # Build and Push App
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/mlops6-410910/app', '-f', './dockerfiles/fastapi.dockerfile', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/mlops6-410910/app']
