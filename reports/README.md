@@ -95,8 +95,8 @@ end of the project.
 ### Additional
 
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [ ] Uploaded all your code to github
+* [X] Make sure all group members have a understanding about all parts of the project
+* [X] Uploaded all your code to github
 
 ## Group information
 
@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+6
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,8 @@ end of the project.
 >
 > Answer:
 
---- question 2 fill here ---
+s135313, s151988, s230284, s183558 
+
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -223,7 +224,8 @@ end of the project.
 >
 > Answer:
 
---- question 9 fill here ---
+We agreed in the group at the begining of the project to consider the 'main' branch as the production branch so it should in theory always be able to run without errors. Therefore we strived to do most of the work in "features" branches. Once we could verify the python tests passed locally, the branch was pushed to the remote repo. Afterwards, depending on the amount of changes, either a group peer reviewed the code in cooperation with the author, or the author simply merged the branch into the main branch and then verifyied the main branch worked as intented. 
+
 
 ### Question 10
 
@@ -474,7 +476,15 @@ end of the project.
 >
 > Answer:
 
---- question 26 fill here ---
+The initial challenge we had at the begining was that all the group members should be able to run the code locally with the same results. It was quickly solved once the mamba enviroment was set up correctly where the list of requirements was continuously updated locally and remotely.
+
+Having overcome the initial challenges, the biggest challenges encountered in the project were:
+
+- Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples in the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
+
+- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial&error approach. Google Cloud has a large amount of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API but we did not get an approval on time. Hence we end up using Compute Engine service as a solution. 
+
+
 
 ### Question 27
 
@@ -491,4 +501,10 @@ end of the project.
 >
 > Answer:
 
---- question 27 fill here ---
+Student s135313 was in charge of dealing with the Google Cloud Services and model training.
+Student s151988 was in charge of the FastAPI and writing the documentation.
+Student s230284 was in charge of dealing with the Google Cloud Services and model training.
+Student s183558 was in charge of dealing with pytests, the Google Cloud Services and model training.
+
+Moreover all the members contributed with the general workflow, setting up the different configurations such as dockerfiles.
+
