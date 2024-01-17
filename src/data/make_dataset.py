@@ -62,9 +62,9 @@ def preprocess_data(file, store=False) -> pd.DataFrame:
     return train_df
 
 def load_train_df(file: str) -> pd.DataFrame:
-    logger.info("Loaded processed datafile")
     project_directory = get_project_dir()
     train_df = pd.read_pickle(f"{project_directory}/data/processed/{file}.pkl")
+    logger.info("Loaded processed datafile")
 
     return train_df
 

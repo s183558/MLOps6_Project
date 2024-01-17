@@ -24,6 +24,7 @@ ENV GOOGLE_APPLICATION_CREDENTIALS=sa_key.json
 
 # Copy the rest of your application
 COPY src/ src/
+COPY data/ data/
 COPY models/ models/
 COPY conf/ conf/
 COPY tests/ tests/
