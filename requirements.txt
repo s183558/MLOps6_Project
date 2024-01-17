@@ -16,4 +16,4 @@ google-api-python-client >= 2.112.0
 pytest >= 7.4.4
 uvicorn >= 0.25.0
 fastapi >= 0.109.0
-
+google-cloud-storage

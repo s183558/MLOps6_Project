@@ -1,13 +1,8 @@
-# Define the secret to be available in the build environment
-# availableSecrets:
-#   secretManager:
-#   - versionName: projects/103212519156/secrets/ServiceAccount_data
-
 steps:
   # Step to pull the service account key secret from Secret Manager
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    args: ['-c', 'gcloud secrets versions access latest --secret="ServiceAccount_data" > /workspace/sa-key.json']
+    args: ['-c', 'gcloud secrets versions access latest --secret="ServiceAccount_data" > /workspace/sa_key.json']
   
   # Build step
   - name: 'gcr.io/cloud-builders/docker'
