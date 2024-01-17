@@ -182,7 +182,6 @@ test_python_shit.py
 # Notebooks
 notebooks/
 
-
 # Ruff
 /.ruff_cache
 

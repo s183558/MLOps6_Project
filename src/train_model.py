@@ -2,6 +2,8 @@ import os
 
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
+from pytorch_lightning.callbacks import ModelCheckpoint
+
 from pytorch_lightning.loggers import WandbLogger
 
 from transformers import AutoTokenizer
@@ -39,13 +41,17 @@ def train_main(cfg:DictConfig):
     else:
         wandb_logger = None
 
+    checkpoint_callback = ModelCheckpoint(monitor="val_loss", 
+                                          dirpath='models/', 
+                                          filename='best_model', 
+                                          save_top_k=1)
     # Training
     trainer = Trainer(
         fast_dev_run = cfg.model["fast_dev_run"], # Run 1 batch of train, val and test data if true
         default_root_dir=cfg.model["output_dir"],
         max_epochs=cfg.model["epochs"],
 
-        callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
+        callbacks=[EarlyStopping(monitor="val_loss", mode="min"), checkpoint_callback],
 
         check_val_every_n_epoch=1, # Evaluate after every epoch
         enable_checkpointing = cfg.model['checkpoints'], # Model checkpoints
@@ -61,7 +67,6 @@ def train_main(cfg:DictConfig):
         # Gpu if avaialable
         devices=1,
         accelerator="auto",
-
         logger=wandb_logger,
                     )
     # Fit model
@@ -70,6 +75,7 @@ def train_main(cfg:DictConfig):
     # Evaluation
     trainer.test(model,dm)
 
+# TODO: Move this to testing or..?
 @hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
 def data_testing(cfg:DictConfig):
     # Specify tokenizer
@@ -80,4 +86,3 @@ def data_testing(cfg:DictConfig):
 
 if __name__ == '__main__':
     train_main()
-    #data_testing()

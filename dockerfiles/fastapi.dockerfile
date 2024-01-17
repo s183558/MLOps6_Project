@@ -18,3 +18,4 @@ WORKDIR /fastapi_proj/app
 
 # Run the FastAPI app
 CMD ["uvicorn", "main_fastapi:app", "--host", "0.0.0.0", "--port", "80"]
+    
