@@ -18,7 +18,7 @@ def get_project_dir() -> str:
 
 def load_bucket(folder: str, bucket_name ="mlops6_tweets"):
     storage_client = storage.Client()
-    bucket = storage_client.bucket()
+    bucket = storage_client.bucket(bucket_name)
     blobs = bucket.list_blobs(prefix=folder)
     project_dir = get_project_dir()
     logger.info(f'Loading {folder} from {bucket_name}')
