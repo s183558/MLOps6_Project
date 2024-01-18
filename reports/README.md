@@ -304,6 +304,7 @@ We agreed in the group at the beginning of the project to consider the 'main' br
 > Answer:
 
 Initially, we used DVC to manage the raw training data (not the processed data) and the trained models. It helped us in a practical way allowing us to separate the code (versioned with git in a GitHub repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However, if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
+
 Due to authentication issues, we stopped using DVC and loaded the data directly from the Google Cloud storage bucket. While not as streamlined as DVC it’s possible to restore previous file versions. It would be preferable to use DVC in cases, where we would want to use several different versions of datasets/models. 
 
 
@@ -485,7 +486,13 @@ The majority of the errors encountered while running the experiments were due to
 
 - <b>Cloud Storage</b>:  A place in the cloud where we can access (read/write) large files. They can be the datasets for training and models for predictions.
 
-- <b>Vertex AI</b>: A service which can be used for ML training and deployment.
+- <b>Cloud build</b>: For building Docker images. Used with a Github push trigger to build training and deployment Docker files. 
+
+- <b>Artifact Registry</b>: For storing and manage build artifacts. Stores Docker builds.
+
+- <b>Secret Manager</b>: A service for handling sensitive data, such as API keys. Used for service account API key and WandB api key in Docker build.
+
+- <b>Vertex AI</b>: A service which can be used for ML training and deployment. Only used briefly for CPU-training testing purposes.
 
 - <b>Cloud Run</b>: It can be considered as a simpler version of Kubernetes for container orchestration.
 
@@ -505,7 +512,7 @@ The majority of the errors encountered while running the experiments were due to
 
 Initially we planned on using the Vertex AI API for training our models, but due to GPU quota increase issues we created a VM instance instead. The VM was located in an European zone (europe:west2-a) where Nvidia T4 GPU was available. For initial setup of the entire workflow, we used a spot provisioned VM for lowering costs. The machine type vas n1-standard-1 with 50 GB storage on the boot disk using the ``c0-deeplearning-common-gpu-v20231209-debian-11-py310`` image, which is a Debian distribution with preinstalled Nvidia drivers (CUDA). When we were ready to do longer training sessions, we created a similar VM only with standard provisioning and 100 GB storage on boot disk. 
 On the VM we authenticated using ``gcloud init`` and assigned the default compute engine storage account, which has access to the artifact/container registry. Then we pulled the training Docker file onto the VM and ran it with the docker flag  ``--gpu all``.
-During the Docker file build process, we downloaded the service account token and wandb authentication token into the Docker file, thus enabling us to load the raw training data for training and collecting both models, logs and metrics in wandb.
+During the Docker file build process, we downloaded the service account API key and wandb authentication API key into the Docker file, thus enabling us to load the raw training data for training and collecting both models, logs and metrics in wandb.
 
 ### Question 19
 
