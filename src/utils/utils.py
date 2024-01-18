@@ -1,8 +1,7 @@
 import json
 import os 
-from google.cloud import secretmanager, storage
+from google.cloud import storage
 import logging
-import src.common.log_config 
 logger=logging.getLogger(__name__)
 
 def access_secret_version():
