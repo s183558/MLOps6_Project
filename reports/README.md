@@ -130,12 +130,12 @@ s135313, s151988, s230284, s183558
 >
 > Answer:
 
-We used multiple third-party framekworks. To name a few:
+We used multiple third-party frameworks. To name a few:
 
 - <b>wandb</b>: to track the training of the model, we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
-- <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator. Furthermore the hydra configurations were used for data processing.
+- <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator. Furthermore, the hydra configurations were used for data processing.
 - <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
-- <b>FastAPI</b>: a fast way to build an API (where we get simple web based GUI for free) that in our case allows to enter sentences to make model predictions. The function to be executed is preceeded with a decorator serving as the interface to FastAPI. Additionally there is a function which allows the user to update the model by fetching it from Google Bucket.
+- <b>FastAPI</b>: a fast way to build an API (where we get simple web-based GUI for free) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded  with a decorator serving as the interface to FastAPI. Additionally, there is a function which allows the user to update the model by fetching it from Google Bucket.
 
 
 ## Coding environment
@@ -159,7 +159,7 @@ We set up virtual environments using Anaconda/Mamba and installed dependencies f
 
 To get a complete copy of the environment required for developing, one could run "make requirements" inside any virtual environment after cloning the project. Here is an example based on conda but any other environment manager can be used:
 
-- ``git clone git@github.com:s183558/MLOps6_Project.git .``: to clone our github project.
+- ``git clone git@github.com:s183558/MLOps6_Project.git .``: to clone our GitHub project.
 
 - ``make create_environment``: to create a conda environment with a suitable python version.
 
@@ -183,7 +183,7 @@ Furthermore, there are some credentials necessary to e.g. be able to pull the da
 > *experiments.*
 > Answer:
 
-After creating the environment and installing the dependencies the project was indeed initialized using the provided cookiecutter template from the [course](https://github.com/SkafteNicki/mlops_template). 
+After creating the environment and installing the dependencies the project was indeed initialized using the provided Cookiecutter template from the [course](https://github.com/SkafteNicki/mlops_template). 
 
 .  
 ├── data/  
@@ -204,11 +204,11 @@ The structure above was the starting point of our project, being the most releva
 -  <b>``data/``</b>: contains the .dvc pointers to the google storage to access the data.  
 -  <b>``models/``</b>:  contains the generated trained models (bookkept by Pytorch Lightning).  
 -  <b>``src/``</b>:  contains the source code of the project.  
--  <b>``tests/``</b>:  contains the unittests for the project.  
+-  <b>``tests/``</b>:  contains the unit tests for the project.  
 
-In addition to the structure provided by cookiecutter we added the following folders:
+In addition to the structure provided by Cookiecutter we added the following folders:
 -  <b>``app/``</b>: contains the FastAPI.  
--  <b>``conf/``</b>: contains the configuration 
+-  <b>``conf/``</b>: contains the configuration.
 
 
 ### Question 6
@@ -220,7 +220,7 @@ In addition to the structure provided by cookiecutter we added the following fol
 >
 > Answer:
 
-We didn't implement any rules for code quality, although we installed ``ruff``, helping to comply with PEP8 guidelines. We attempted to do typehinting in most of our code, but in general we didn't use any 3rd. party code quality checkers as the code quality in the team was reasonably good. However for larger projects it is naturally recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). A set of rules ensures consistency and it is easier for the members to understand eachothers code.
+We didn't implement any rules for code quality, although we installed ``ruff``, helping to comply with PEP8 guidelines. We attempted to do type hinting in most of our code, but in general we didn't use any 3rd. party code quality checkers as the code quality in the team was reasonably good. However, for larger projects it's recommended to enforce some code quality rules. In practice it's not that important which set of rules are enforced (as long as they are reasonable). A set of rules ensures consistency, and it's easier for the members to understand each others code.
 
 
 ## Version control
@@ -243,7 +243,7 @@ We didn't implement any rules for code quality, although we installed ``ruff``, 
 In total we implemented four ``test_*.py`` files being the central parts of the code to test: 
 
 <b>Data processing</b>: Before training we want to ensure that the correct data/input is available.  
-<b>Training logic</b>: We considered that the most important part to test was the training logic. Therefore two types of tests where made. One with a subset of the real training data and an additional test to verify whether the functions in the training loop are called appropiately.  
+<b>Training logic</b>: We considered that the most important part to test was the training logic. Therefore, two types of tests where made. One with a subset of the real training data and an additional test to verify whether the functions in the training loop are called appropriately.  
 <b>Prediction logic</b>: Simple test that verifies that the return data size and type are correct.  
 
 
@@ -271,8 +271,8 @@ src/train_model.py:       78%
 
 We could have made more test to come closer to 100% but at least we have now the proper workflow set up correctly. It is worth to mention that 100% coverage does not guarantee error-free code for various reasons:  
 1) The testing code could be wrong.  
-2) The test may inadvertly rely on that all ressources are available (e.g. files to be loaded). If the tested code does not implement the necessary error handling then no error is catched until the code is deployed in production.  
-3) The tests above are ``unittest`` which tests the functions isolated from the world. Integration tests are also necessary to ensure that the interfaces between the functions and modules work as intented.
+2) The test may inadvertently rely on that all resources  are available (e.g. files to be loaded). If the tested code does not implement the necessary error handling, then no error is caught until the code is deployed in production.  
+3) The tests above are ``unit test`` which tests the functions isolated from the world. Integration tests are also necessary to ensure that the interfaces between the functions and modules work as intended.
 
 ### Question 9
 
@@ -287,7 +287,7 @@ We could have made more test to come closer to 100% but at least we have now the
 >
 > Answer:
 
-We agreed in the group at the begining of the project to consider the 'main' branch as the production branch so it should in theory always be able to run without errors. Therefore we strived to do most of the work in "features" branches. Once we could verify the python tests passed locally, the branch was pushed to the remote repo. Afterwards, depending on the amount of changes, either a group peer reviewed the code in cooperation with the author, or the author simply merged the branch into the main branch and then verifyied the main branch worked as intented. 
+We agreed in the group at the beginning of the project to consider the 'main' branch as the production branch so it should in theory always be able to run without errors. Therefore, we strived to do most of the work in "features" branches. Once we could verify the python tests passed locally, the branch was pushed to the remote repo. Afterwards, depending on the number of changes, either a group peer reviewed the code in cooperation with the author, or the author simply merged the branch into the main branch and then verified the main branch worked as intended. 
 
 
 ### Question 10
@@ -303,7 +303,7 @@ We agreed in the group at the begining of the project to consider the 'main' bra
 >
 > Answer:
 
-We used DVC to manage the raw training data (not the processed data) and the models. It helped us in a practical way allowing us to separate the code (versioned with git in a github repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
+We used DVC to manage the raw training data (not the processed data) and the models. It helped us in a practical way allowing us to separate the code (versioned with git in a GitHub repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However, if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
 
 ### Question 11
 
@@ -319,11 +319,11 @@ We used DVC to manage the raw training data (not the processed data) and the mod
 >
 > Answer:
 
-We created a github workflow [(.github/workflows/test_on_push.yml)](https://github.com/s183558/MLOps6_Project/blob/main/.github/workflows/test_on_push.yml) that is triggered when there is a push to the ``main`` branch and when a pull request is made to the ``main`` branch. We kept it fairly simple where only a runner is built (Ubuntu based) and only a python version is tested. We made use of cache to improve the speed of subsequent builds. The unittests are tested again since any merge into main can risk to break the build.
+We created a GitHub workflow [(.github/workflows/test_on_push.yml)](https://github.com/s183558/MLOps6_Project/blob/main/.github/workflows/test_on_push.yml) that is triggered when there is a push to the ``main`` branch and when a pull request is made to the ``main`` branch. We kept it fairly simple where only a runner is built (Ubuntu based) and only a python version is tested. We made use of cache to improve the speed of subsequent builds. The unit tests are tested again since any merge into main can risk breaking the build.
 
-We decided to trigger the training in Google Cloud manually to avoid exceeding the free quota. However in a more realistic scenario, we could have the ``main`` branch, as many features branches as necessary, a developer branch and a branch with the sole purpose to train the model. The isolation of the training activity in a branch would allow to better control the available quota and/or ressources.
+We decided to trigger the training in Google Cloud manually to avoid exceeding the free quota. However, in a more realistic scenario, we could have the ``main`` branch, as many features branches as necessary, a developer branch and a branch with the sole purpose to train the model. The isolation of the training activity in a branch would allow to better control the available quota and/or resources.
 
-The test summary of this [job](https://github.com/s183558/MLOps6_Project/actions/runs/7504814581/job/20432714507#step:10:57) in Github illustrates the value of continuous integration:
+The test summary of this [job](https://github.com/s183558/MLOps6_Project/actions/runs/7504814581/job/20432714507#step:10:57) in GitHub illustrates the value of continuous integration:
 
 <code>
 =========================== short test summary info ============================  
@@ -368,7 +368,7 @@ def train_main(cfg:DictConfig):
 
     [...]
 </code>
-The decorator fetches the configuration yaml file where the parameters are specified. Then in the body of ``train_main`` the parameters are avaiable via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``optimizer``. It is an efficient way to deal with multiple experiments without having to modify the code.
+The decorator fetches the configuration yaml file where the parameters are specified. Then in the body of ``train_main`` the parameters are available via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``optimizer``. It is an efficient way to deal with multiple experiments without having to modify the code.
 
 
 ### Question 13
@@ -384,7 +384,7 @@ The decorator fetches the configuration yaml file where the parameters are speci
 >
 > Answer:
 
-In order to reproduce the experiments we made use of Hydra as described in the previous question. The workflow to run an experiement is the following:  
+In order to reproduce the experiments, we made use of Hydra as described in the previous question. The workflow to run an experiment is the following:  
 
   1) It is assumed that the conda environment is activated and that all the necessary dependencies are installed.  
   2) The parameter values in the config file are set up.  
@@ -421,7 +421,7 @@ In order to track the experiments and to visualize them we used the third-party 
 
 Each experiment gets an automatic generated name for easier recognition. In this case the experiment is called ``treasured_water-12``. The included plots display how four variables change along training, being: ``epoch``, ``train_loss``, ``val_accuracy`` and ``val_loss``.  
 
-The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall idea of how accurate the model to classify the tweets from the validation dataset (two labels are possible:'catastrophe' and 'not catastrophe'). The most important variables in the plot are ``train_loss`` and ``val_loss``. Ideally we would like to see a gradual reduction/improvement of the ``train_loss`` and the same for ``val_loss``. In order to avoid overfitting, an early stop strategy was enabled. It is fair to say that based on the presented plot, the model does not seem to learn, although at the end the group managed to train a model which was somewhat able to classify the tweets. We can also mention that we only used a very small portion of all the capabilities of W&B. 
+The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall idea of how accurate the model to classify the tweets from the validation dataset (two labels are possible: 'catastrophe' and 'not catastrophe'). The most important variables in the plot are ``train_loss`` and ``val_loss``. Ideally we would like to see a gradual reduction/improvement of the ``train_loss`` and the same for ``val_loss``. In order to avoid overfitting, an early stop strategy was enabled. It is fair to say that based on the presented plot, the model does not seem to learn, although at the end the group managed to train a model which was somewhat able to classify the tweets. We can also mention that we only used a very small portion of all the capabilities of W&B. 
 
 
 
@@ -438,11 +438,11 @@ The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall
 >
 > Answer:
 
-We have a ``dockerfiles/`` directory in the root with the images that can be built and run. To build all the container applications the command:  
+We have a ``dockerfiles/`` directory in the root with the images that can be built and run. To build all the container applications, the command:
 
 ``docker-compose build`` 
 
-can be executed and executes the instructions in each yaml file in the directory. However, in most cases one is only interested in building a specific image. If it is for example desired to create the image to train the model one can execute:  
+can be executed and runs the instructions in each yaml file in the directory. However, in most cases one is only interested in building a specific image. If it is for example desired to create the image to train the model one can execute:  
 
 ``docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest``.  
 
@@ -450,8 +450,9 @@ Afterwards the following command is executed to create and start a new container
 
 ``docker run –name train_instance trainer:latest``  
 
-The dockerfiles have an entry point
-docker run -it –entrypoint sh trainer:latest 
+The dockerfiles have an entry point:
+
+``docker run -it –entrypoint sh trainer:latest ``
 
 
 ### Question 16
@@ -467,9 +468,9 @@ docker run -it –entrypoint sh trainer:latest
 >
 > Answer:
 
-The aim in our project is to get an understanding of the wide variety of tools in MLOps. The ML problem (data loading/training/evaluation/prediction etc.) is secondary and is not the focus of the project. Therefore the codebase is relatively small compared to the complexity of the tools employed. Most of the code was written while the unittests were designed. At that stage both the code being tested and the testing code could fail and it would typically be sufficient to see the error messages returned by python. The errors were fairly straight forward to spot. 
+The aim in our project is to get an understanding of the wide variety of tools in MLOps. The ML problem (data loading/training/evaluation/prediction etc.) is secondary and is not the focus of the project. Therefore, the codebase is relatively small compared to the complexity of the tools employed. Most of the code was written while the unit tests were designed. At that stage both the code being tested, and the testing code could fail and it would typically be sufficient to see the error messages returned by python. The errors were fairly straight forward to spot. 
 
-The majority of the errors encountered while running the experiments were due to issues with the necessary credentials so the different service could interact with each other. In the ideal case some unittests and integration tests should have been designed to address those types of errors but we found it to be more valuable to invest the time in the remaining of the MLOps workflow.
+The majority of the errors encountered while running the experiments were due to issues with the necessary credentials so the different service could interact with each other. In the ideal case some unit tests and integration tests should have been designed to address those types of errors, but we found it to be more valuable to invest the time in the remaining of the MLOps workflow.
 
 
 
@@ -572,7 +573,7 @@ The majority of the errors encountered while running the experiments were due to
 > Answer:
 
 We sadly did not manage to implement monitoring. 
-First and foremost it would be nice to see how many people are actually using our application, to figure out the demand of the model, coming from a business point of view. But from a technical point of view, it would be nice to see if the hardware, which the application runs on, is actually holding up to the demand/traffic it recieves. It would also be nice to see how fast the application actually serves the user, as we all nowadays have a short attention span, which means we don't wan't to wait long for the answer provided by our application.
+First and foremost, it would be nice to see how many people are actually using our application, to figure out the demand of the model, coming from a business point of view. But from a technical point of view, it would be nice to see if the hardware, which the application runs on, is actually holding up to the demand/traffic it receives. It would also be nice to see how fast the application actually serves the user, as we all nowadays have a short attention span, which means we don't wasn't to wait long for the answer provided by our application.
 
 ### Question 24
 
@@ -611,9 +612,9 @@ First and foremost it would be nice to see how many people are actually using ou
 
 The diagram above shows gives an overview of the MLOps architecture we implemented in the project.  
 
-The process starts in the <b><span style="color:blue;">development</span></b> phase, where the developer <b><span style="color:blue;">commits</span></b> code changes to the <b><span style="color:blue;">Github</span></b> repository. This action triggers <b><span style="color:blue;">Github Actions</span></b>, which are configured to run the <b><span style="color:blue;">unit tests</span></b>, going through various checks of the code. Parallel to that activity, the changes in the repository activate a <b><span style="color:blue;">Google Cloud Build Trigger</span></b>. This trigger is responsible for building a <b><span style="color:blue;">training docker</span></b> image with all the required dependencies and credentials/<b><span style="color:blue;">secrets</span></b>. The <b><span style="color:blue;">training docker</span></b> is designed for training the classification model. Furthermode an <b><span style="color:blue;">application docker</span></b> image is also built, used to make predictions.  
+The process starts in the <b><span style="color:blue;">development</span></b> phase, where the developer <b><span style="color:blue;">commits</span></b> code changes to the <b><span style="color:blue;">GitHub</span></b> repository. This action triggers <b><span style="color:blue;">GitHub Actions</span></b>, which are configured to run the <b><span style="color:blue;">unit tests</span></b>, going through various checks of the code. Parallel to that activity, the changes in the repository activate a <b><span style="color:blue;">Google Cloud Build Trigger</span></b>. This trigger is responsible for building a <b><span style="color:blue;">training docker</span></b> image with all the required dependencies and credentials/<b><span style="color:blue;">secrets</span></b>. The <b><span style="color:blue;">training docker</span></b> is designed for training the classification model. Furthermore, an <b><span style="color:blue;">application docker</span></b> image is also built, used to make predictions.  
 
-In the <b><span style="color:blue;">Virtual Machine</span></b> running in  <b><span style="color:blue;">Google Cloud</span></b> the docker image is pulled and a container is created that trains the model with data retrieved from <b><span style="color:blue;">Google's bucket/data</span></b>. The <b><span style="color:blue;">training docker</span></b> is linked to a service running in <b><span style="color:blue;">W&S</span></b> which is in charge of logging information (such as metrics and hyperparameters) relevant for the performance analysis, comparison and tracking of the trained models. A model of choice is then saved in <b><span style="color:blue;">Google's bucket/models</span></b> which is in the deployment phase loaded by the <b><span style="color:blue;">application docker</span></b> container running in <b><span style="color:blue;">Cloud Run</span></b>. The entry point of <b><span style="color:blue;">application docker</span></b> is set to run the FastAPI and a web GUI can be accessed at the exponsed <b><span style="color:blue;">URL://endpoint</span></b>. In there Twitter messages can be entered and the model predicts whether they can be considered as catastrophe or not.
+In the <b><span style="color:blue;">Virtual Machine</span></b> running in  <b><span style="color:blue;">Google Cloud</span></b> the docker image is pulled and a container is created that trains the model with data retrieved from <b><span style="color:blue;">Google's bucket/data</span></b>. The <b><span style="color:blue;">training docker</span></b> is linked to a service running in <b><span style="color:blue;">W&S</span></b> which is in charge of logging information (such as metrics and hyperparameters) relevant for the performance analysis, comparison and tracking of the trained models. A model of choice is then saved in <b><span style="color:blue;">Google's bucket/models</span></b> which is in the deployment phase loaded by the <b><span style="color:blue;">application docker</span></b> container running in <b><span style="color:blue;">Cloud Run</span></b>. The entry point of <b><span style="color:blue;">application docker</span></b> is set to run the FastAPI and a web GUI can be accessed at the exposed <b><span style="color:blue;">URL://endpoint</span></b>. In there, Twitter messages can be entered, and the model predicts whether they can be considered as catastrophe or not.
 
 
 ### Question 26
@@ -628,13 +629,13 @@ In the <b><span style="color:blue;">Virtual Machine</span></b> running in  <b><s
 >
 > Answer:
 
-The initial challenge we had at the begining was that all the group members should be able to run the code locally with the same results. It was quickly solved once the conda enviroment was set up correctly where the list of requirements was continuously updated locally and remotely.
+The initial challenge we had at the beginning was that all the group members should be able to run the code locally with the same results. It was quickly solved once the conda environment was set up correctly where the list of requirements was continuously updated locally and remotely.
 
 Having overcome the initial challenges, the biggest challenges encountered in the project were:
 
-- Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples in the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
+- Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples on the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
 
-- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial&error approach. Google Cloud has a large amount of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API but we did not get an approval on time. Hence we end up using Compute Engine service as a solution. 
+- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'WandB', 'DVC', Docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial & error approach. Google Cloud has a large number of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API, but we did not get an approval on time. Hence, we end up using Compute Engine service as a solution. 
 
 
 
