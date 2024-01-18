@@ -303,7 +303,9 @@ We agreed in the group at the beginning of the project to consider the 'main' br
 >
 > Answer:
 
-We used DVC to manage the raw training data (not the processed data) and the models. It helped us in a practical way allowing us to separate the code (versioned with git in a GitHub repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However, if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
+Initially, we used DVC to manage the raw training data (not the processed data) and the trained models. It helped us in a practical way allowing us to separate the code (versioned with git in a GitHub repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However, if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
+Due to authentication issues, we stopped using DVC and loaded the data directly from the Google Cloud storage bucket. While not as streamlined as DVC it’s possible to restore previous file versions. It would be preferable to use DVC in cases, where we would want to use several different versions of datasets/models. 
+
 
 ### Question 11
 
@@ -364,11 +366,12 @@ def train_main(cfg:DictConfig):
 
     # Model
     learning_rate = cfg.model["lr"]
-    optimizer = cfg.model["optimizer"]
+    epochs = cfg.model["epochs"]
 
     [...]
 </code>
-The decorator fetches the configuration yaml file where the parameters are specified. Then in the body of ``train_main`` the parameters are available via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``optimizer``. It is an efficient way to deal with multiple experiments without having to modify the code.
+The decorator fetches the main configuration yaml file where the data and model configuration filenames were specified (e.g. default.yaml, many_epochs.yaml etc.). Then in the body of e.g. ``train_main`` the parameters are available via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``epochs``. 
+It is an efficient way to deal with multiple experiments without having to modify the code if we run Hydra. We also experimented with different hyperparameters running the training file as <code>python src/train_model.py model model.lr=1e-6 model.epochs=20</code> thus easily overriding the values specified in the .yaml, while still tracked in wandb. 
 
 
 ### Question 13
@@ -505,7 +508,9 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 18 fill here ---
+Initially we planned on using the Vertex AI API for training our models, but due to GPU quota increase issues we created a VM instance instead. The VM was located in an European zone (europe:west2-a) where Nvidia T4 GPU was available. For initial setup of the entire workflow, we used a spot provisioned VM for lowering costs. The machine type vas n1-standard-1 with 50 GB storage on the boot disk using the ``c0-deeplearning-common-gpu-v20231209-debian-11-py310`` image, which is a Debian distribution with preinstalled Nvidia drivers (CUDA). When we were ready to do longer training sessions, we created a similar VM only with standard provisioning and 100 GB storage on boot disk. 
+On the VM we authenticated using ``gcloud init`` and assigned the default compute engine storage account, which has access to the artifact/container registry. Then we pulled the training Docker file onto the VM and ran it with the docker flag  ``--gpu all``.
+During the Docker file build process, we downloaded the service account token and wandb authentication token into the Docker file, thus enabling us to load the raw training data for training and collecting both models, logs and metrics in wandb.
 
 ### Question 19
 
@@ -550,7 +555,31 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 22 fill here ---
+We deployed the model both locally and in the cloud. The branch ``upload_docker_to_gcloud`` in Github triggers the build of the application docker image which is stored in bucket of Google Cloud as an artifact. Afterwards it can e.g. be retrieved manually by executing in a local PC the following:  
+
+``docker pull gcr.io/mlops6-410910/app:latest``
+
+Once the image is pulled, the corresponding container can be created and run with:
+
+``docker run --name our_fantastic_container -p 80:80 gcr.io/mlops6-410910/app:latest``
+
+
+On success, the generated web GUI can be assessed as shown below:
+
+<code>
+docker run --name predict_pepe -p 80:80 gcr.io/mlops6-410910/app:latest
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
+</code>
+
+
+In the dockerfile, the entry point of the container calls ``main_fastapi`` where the FastAPI logic is implemented. The two main functions available for the user through the web GUI are:
+
+- <b>``@app.get("/predictions/")``</b>: where the user can enter Twitters and the model predicts whether it is a catastrophe or not.
+- <b>``@app.get("/update_model/")``</b>: allows the user to update the model without having to pull a new image and create a new container.
+
 
 ### Question 23
 
@@ -580,7 +609,7 @@ First and foremost, it would be nice to see how many people are actually using o
 >
 > Answer:
 
---- question 24 fill here ---
+We ended up using only roughly $4.0. Most of which was spend on Cloud Storage, and secondly running the VM. However, if we chose to attempt creating a well-performing model we would expect the GPU-training to increase cost considerably.
 
 ## Overall discussion of project
 
@@ -622,13 +651,13 @@ In the <b><span style="color:blue;">Virtual Machine</span></b> running in  <b><s
 >
 > Answer:
 
-The initial challenge we had at the beginning was that all the group members should be able to run the code locally with the same results. It was quickly solved once the conda environment was set up correctly where the list of requirements was continuously updated locally and remotely.
+After making sure that all group members had functional environments and OS-based dependencies installed properly, we began working on processing data, building a model and a training process. Due to parallelization of the workload, we ended up having overlap in code between our branches. Thus, we wasted a bit of time which may have been avoided if we settled earlier on what third party packages to use and to what extent. We ended up structuring data processing using Lightning PyTorch data module and training code in the Lightning trainer.  
 
-Having overcome the initial challenges, the biggest challenges encountered in the project were:
+It was time consuming and problematic moving from the local environment to Google Cloud, initially with granting the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and Github. We ended up discarding dvc and loading data directly from the Google Cloud bucket and saving trained models in wandb to select the best performing model and upload it back to the Cloud bucket models directory.
 
-- Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples on the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
+We initially wanted to use the Vertex AI API for GPU-enabled training but due to quota issues (still pending 5 days later) we used a VM instance instead. However, getting to create an appropriate GPU-enabled VM was non-trivial despite being a simple task. It took a lot of trial and error to find an available resource where the desired deep learning base image also worked. For some reason, the Nvidia driver installation failed on non-Europe zone machines while seemingly only few T4 GPU’s were available in the European zone. Further, it’s necessary to complete the instance creation before being notified if the requested machine is available or not. 
+Figuring out how to best authenticate the docker container running in the VM to both access the Google Cloud bucket and wandb also was a bit time-consuming, especially when testing changes that required a new Docker build. We did end up with a good solution, that doesn’t expose any secret API keys.
 
-- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'WandB', 'DVC', Docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial & error approach. Google Cloud has a large number of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API, but we did not get an approval on time. Hence, we end up using Compute Engine service as a solution. 
 
 
 
