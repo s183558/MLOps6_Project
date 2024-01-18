@@ -41,7 +41,7 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_dev.txt
         pip install -e .
-        python src/data/make_dataset.py data
+        python src/data/load_data.py
 
     # - uses: iterative/setup-dvc@v1
     # - name: Get data

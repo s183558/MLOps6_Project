@@ -17,6 +17,7 @@ RUN pip install torch torchvision torchaudio --extra-index-url https://download.
 
 # Copy the service account key
 COPY sa_key.json sa_key.json
+COPY WandB_API_key.json WandB_API_key.json
 
 # Set the environment variable for Google Cloud authentication
 ENV GOOGLE_APPLICATION_CREDENTIALS=sa_key.json
