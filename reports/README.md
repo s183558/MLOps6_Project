@@ -512,7 +512,9 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 18 fill here ---
+Initially we planned on using the Vertex AI API for training our models, but due to GPU quota increase issues we created a VM instance instead. The VM was located in an European zone (europe:west2-a) where Nvidia T4 GPU was available. For initial setup of the entire workflow, we used a spot provisioned VM for lowering costs. The machine type vas n1-standard-1 with 50 GB storage on the boot disk using the ``c0-deeplearning-common-gpu-v20231209-debian-11-py310`` image, which is a Debian distribution with preinstalled Nvidia drivers (CUDA). When we were ready to do longer training sessions, we created a similar VM only with standard provisioning and 100 GB storage on boot disk. 
+On the VM we authenticated using ``gcloud init`` and assigned the default compute engine storage account, which has access to the artifact/container registry. Then we pulled the training Docker file onto the VM and ran it with the docker flag  ``--gpu all``.
+During the Docker file build process, we downloaded the service account token and wandb authentication token into the Docker file, thus enabling us to load the raw training data for training and collecting both models, logs and metrics in wandb.
 
 ### Question 19
 
@@ -557,7 +559,31 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 22 fill here ---
+We deployed the model both locally and in the cloud. The branch ``upload_docker_to_gcloud`` in Github triggers the build of the application docker image which is stored in bucket of Google Cloud as an artifact. Afterwards it can e.g. be retrieved manually by executing in a local PC the following:  
+
+``docker pull gcr.io/mlops6-410910/app:latest``
+
+Once the image is pulled, the corresponding container can be created and run with:
+
+``docker run --name our_fantastic_container -p 80:80 gcr.io/mlops6-410910/app:latest``
+
+
+On success, the generated web GUI can be assessed as shown below:
+
+<code>
+docker run --name predict_pepe -p 80:80 gcr.io/mlops6-410910/app:latest
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
+</code>
+
+
+In the dockerfile, the entry point of the container calls ``main_fastapi`` where the FastAPI logic is implemented. The two main functions available for the user through the web GUI are:
+
+- <b>``@app.get("/predictions/")``</b>: where the user can enter Twitters and the model predicts whether it is a catastrophe or not.
+- <b>``@app.get("/update_model/")``</b>: allows the user to update the model without having to pull a new image and create a new container.
+
 
 ### Question 23
 
@@ -587,7 +613,7 @@ First and foremost, it would be nice to see how many people are actually using o
 >
 > Answer:
 
---- question 24 fill here ---
+We ended up using only roughly $4.0. Most of which was spend on Cloud Storage, and secondly running the VM. However, if we chose to attempt creating a well-performing model we would expect the GPU-training to increase cost considerably.
 
 ## Overall discussion of project
 
