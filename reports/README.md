@@ -214,7 +214,7 @@ The structure above was the starting point of our project, being the most releva
 >
 > Answer:
 
-We did not implement any rules for code quality, although we did install ``ruff`` which helps to comply with PEP8 guidelines. We attempted to do typehinting in most of our code, but in general we didnt use any 3rd. party code quality checkers as the code quality in the team was reasonably good. However for larger projects it is of course recommended to enforce some code quality rules, as not everyone in a large team will have a good code structure. In practice is not that important which set of rules are enforced (as long as they are reasonable and consistent). The most important is that having a set of rules ensures consistency and it is easier for the members to understand eachothers code.
+We didn't implement any rules for code quality, although we installed ``ruff``, helping to comply with PEP8 guidelines. We attempted to do typehinting in most of our code, but in general we didn't use any 3rd. party code quality checkers as the code quality in the team was reasonably good. However for larger projects it is naturally recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). A set of rules ensures consistency and it is easier for the members to understand eachothers code.
 
 
 ## Version control
