@@ -387,20 +387,13 @@ It is an efficient way to deal with multiple experiments without having to modif
 >
 > Answer:
 
-In order to reproduce the experiments, we made use of Hydra as described in the previous question. The workflow to run an experiment is the following:  
+In order to reproduce the experiments, we made use of Hydra as described in the previous question as well as WandB. The workflow to run an experiment is the following:  
 
-  1) It is assumed that the conda environment is activated and that all the necessary dependencies are installed.  
-  2) The parameter values in the config file are set up.  
-  3) An experiment is run with ``make train`` (where the model is trained with the specified parameters).  
-  4) The model is saved in Google Storage using DVC together with the corresponding commit (that also includes the configuration file):  
-    
-    git pull (to avoid possible conflicts)
-    dvc add models/
-    git add models.dvc .gitignore
-    git add config.yaml
-    git commit -m "Experiment X"
-    dvc push
-    git push    
+  1) The necessary dependencies were installed on the virtual machine from Gcloud, or locally if an experiment was done locally.  
+  2) The default parameter values in the config file were set up.  
+  3) An experiment with the default hyperparameters is run with ``python3 src/train_model.py``, or ``python3 src/train_model.py <hyperparameter_A>=x <hyperparameter_B>=y`` if some hyperparameters should be changed for expermiental sake.  
+  4) The runs is being logged with WandB.   
+  5) If the result of the test corresponded to a better model than previously achieved, we would manually go into WandB and download the checkpoint and place it in the "best_model" folder in our Gcloud bucket.
 
 
 ### Question 14
@@ -418,14 +411,17 @@ In order to reproduce the experiments, we made use of Hydra as described in the 
 >
 > Answer:
 
-In order to track the experiments and to visualize them we used the third-party tool called [Weights & Biases](https://wandb.ai/) previously described in question 13. The figure below shows the results of one experiment (where the model was trained with a set of parameters as specified in the configuration yaml file):
+In order to track the experiments and to visualize them we used the third-party tool called [Weights & Biases](https://wandb.ai/). The figure below shows the results of one experiment (where the model was trained with a set of parameters as specified in the configuration yaml file):
 
-![treasured_water](figures/wand_treasured_water.png)
+![treasured_water](figures/wandb_treasured_water.png)
 
 Each experiment gets an automatic generated name for easier recognition. In this case the experiment is called ``treasured_water-12``. The included plots display how four variables change along training, being: ``epoch``, ``train_loss``, ``val_accuracy`` and ``val_loss``.  
 
-The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall idea of how accurate the model to classify the tweets from the validation dataset (two labels are possible: 'catastrophe' and 'not catastrophe'). The most important variables in the plot are ``train_loss`` and ``val_loss``. Ideally we would like to see a gradual reduction/improvement of the ``train_loss`` and the same for ``val_loss``. In order to avoid overfitting, an early stop strategy was enabled. It is fair to say that based on the presented plot, the model does not seem to learn, although at the end the group managed to train a model which was somewhat able to classify the tweets. We can also mention that we only used a very small portion of all the capabilities of W&B. 
+The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall idea of how accurate the model to classify the tweets from the validation dataset (two labels are possible: 'catastrophe' and 'not catastrophe'). The most important variables in the plot are ``train_loss`` and ``val_loss``. Ideally we would like to see a gradual reduction/improvement of the ``train_loss`` and the same for ``val_loss``. In order to avoid overfitting, an early stop strategy was enabled. It is fair to say that based on the presented plot, the model does not seem to learn, although at the end the group managed to train a model which was somewhat able to classify the tweets. 
 
+In the experiments below, we have run the same model, but with different learning rates. This then shows us that the configurations used in ``dainty-universe-39`` is the best model. The model was then downloaded and uploaded to the Gcloud bucket.
+
+![treasured_water](figures/Q14.png)
 
 
 ### Question 15
