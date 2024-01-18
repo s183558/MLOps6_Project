@@ -540,7 +540,7 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 21 fill here ---
+![q21](figures/q21.png)
 
 ### Question 22
 
