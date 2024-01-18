@@ -81,7 +81,7 @@ end of the project.
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -132,7 +132,7 @@ s135313, s151988, s230284, s183558
 
 We used multiple third-party framekworks. To name a few:
 
-- <b>wandb</b>: to track the training of the model, especifically we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
+- <b>wandb</b>: to track the training of the model, we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
 - <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator.
 - <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
 - <b>FastAPI</b>: a fast way to build an API (with a simple web based GUI) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded with a decorator serving as the interface to FastAPI.
@@ -448,8 +448,6 @@ The dockerfiles have an entry point
 docker run -it –entrypoint sh trainer:latest 
 
 
-
-
 ### Question 16
 
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
@@ -463,7 +461,12 @@ docker run -it –entrypoint sh trainer:latest
 >
 > Answer:
 
---- question 16 fill here ---
+The aim in our project is to get an understanding of the wide variety of tools in MLOps. The ML problem (data loading/training/evaluation/prediction etc.) is secondary and is not the focus of the project. Therefore the codebase is relatively small compared to the complexity of the tools employed. Most of the code was written while the unittests were designed. At that stage both the code being tested and the testing code could fail and it would typically be sufficient to see the error messages returned by python. The errors were fairly straight forward to spot. 
+
+The majority of the errors encountered while running the experiments were due to issues with the necessary credentials so the different service could interact with each other. In the ideal case some unittests and integration tests should have been designed to address those types of errors but we found it to be more valuable to invest the time in the remaining of the MLOps workflow.
+
+
+
 
 ## Working in the cloud
 
@@ -480,7 +483,14 @@ docker run -it –entrypoint sh trainer:latest
 >
 > Answer:
 
---- question 17 fill here ---
+- <b>Compute Engine</b>: It allows us to run a virtual machine in which we can e.g. run a Docker container to train the model.
+
+- <b>Cloud Storage</b>:  A place in the cloud where we can access (read/write) large files. They can be the datasets for training and models for predictions.
+
+- <b>Vertex AI</b>: A service which can be used for ML training and deployment.
+
+- <b>Cloud Run</b>: It can be considered as a simpler version of Kubernetes for container orchestration.
+
 
 ### Question 18
 

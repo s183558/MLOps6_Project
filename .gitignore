@@ -198,6 +198,7 @@ wandb
 
 # Gouugle Cloud Auth
 sa_key.json
+WandB_API_key.json
 
 # ignore content of data folder but keep folder
 /data/raw/

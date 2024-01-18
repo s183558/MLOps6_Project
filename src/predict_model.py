@@ -7,9 +7,8 @@ from pathlib import Path
 from transformers import AutoTokenizer
 from pytorch_lightning import Trainer
 
-
-def predict(data, which_model : str = "latest"):
-
+def predict(data, which_model : str = "best"):
+    
     # get model
     if which_model == "random":
         # Only specify a model with random weights and biases. We don't need a trained model for unit testing.
@@ -77,6 +76,7 @@ if __name__ == '__main__':
     # Create dummy data
     dummy_data = ["movie on my house car","my car is on fire", "elephant was on chicken",
             "keyboard mouse string", "sandwich are cool lol", "as my own", "Nuclear War", "sleeping", "Shot and killed"]
+    
     print("Started predicting 1 2 3...")
     model_data = predict(dummy_data)
     print("Finished predicting.")

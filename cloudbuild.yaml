@@ -3,7 +3,13 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args: ['-c', 'gcloud secrets versions access latest --secret="ServiceAccount_data" --project="103212519156" > /workspace/sa_key.json']
-  
+    
+# Step to pull the service account key secret from Secret Manager
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args: ['-c', 'gcloud secrets versions access latest --secret="WANDB_API_KEY" --project="103212519156" > /workspace/WandB_API_key.json']
+
+
   # Build and Push Training
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/mlops6-410910/testing', '.']

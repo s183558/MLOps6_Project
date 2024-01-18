@@ -17,6 +17,7 @@ from omegaconf import DictConfig
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
 def train_main(cfg:DictConfig):
+    # TODO: I believe that this is dependent on device (GPU or CPU)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     # Specify tokenizer
@@ -34,7 +35,7 @@ def train_main(cfg:DictConfig):
     if cfg.model.wandb_logging == "enabled": # Oh I know. This was a bool, and a good one. But Hydra in Docker doesnt only allow str, float or int.
         API_key = access_secret_version()
         wandb.login(key=API_key)
-        
+
         wandb_logger = WandbLogger(log_model="all",
                                 project="mlops_for_the_win",
                                 entity='mlops_for_the_win',
@@ -86,5 +87,3 @@ def data_testing(cfg:DictConfig):
 
 if __name__ == '__main__':
     train_main()
-    #data_testing()
-    
