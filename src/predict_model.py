@@ -16,7 +16,7 @@ def predict(data : [str], which_model : str = "best") -> torch.Tensor:
     
     elif which_model == "best":
         # Find the best_model file in the folder
-        model_dir = '/models/best_model/model.ckpt'
+        model_dir = 'models/best_model/model.ckpt'
         current_dir = Path(os.getcwd())
 
         if current_dir.name == 'app':
