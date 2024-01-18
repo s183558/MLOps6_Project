@@ -19,7 +19,7 @@ RUN pip install -e .
 
 # Set the environment variable for Google Cloud authentication
 COPY sa_key.json sa_key.json
-ENV GOOGLE_APPLICATION_CREDENTIALS=sa_key.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=/fastapi_proj/sa_key.json
 
 # Fetch models
 RUN python src/load_models.py

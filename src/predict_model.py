@@ -72,8 +72,6 @@ def predict(data : [str], which_model : str = "best") -> torch.Tensor:
     for batch in output:
         prediction_list.append(torch.argmax(batch["logits"], dim=1))
     predictions = torch.cat(prediction_list)
-    print(f'predictions: {predictions}')
-    print(f'yhat: {["catastrophe" if value == 1 else "not catastrophe" for value in predictions ]}')
 
     return predictions
     
@@ -84,4 +82,6 @@ if __name__ == '__main__':
     
     print("Started predicting 1 2 3...")
     model_data = predict(dummy_data)
+    print(f'predictions: {model_data}')
+    print(f'yhat: {["catastrophe" if value == 1 else "not catastrophe" for value in model_data ]}')
     print("Finished predicting.")
