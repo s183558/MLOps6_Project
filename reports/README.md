@@ -370,8 +370,8 @@ def train_main(cfg:DictConfig):
 
     [...]
 </code>
-The decorator fetches the main configuration yaml file where the data and model configuration filenames were specified (e.g. default.yaml, many_epochs.yaml etc.). Then in the body of e.g. ``train_main`` the parameters are available via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``epochs``. 
-It is an efficient way to deal with multiple experiments without having to modify the code if we run Hydra. We also experimented with different hyperparameters running the training file as <code>python src/train_model.py model model.lr=1e-6 model.epochs=20</code> thus easily overriding the values specified in the .yaml, while still tracked in wandb. 
+The decorator fetches the main configuration yaml file where the data and model configuration filenames were specified (e.g. default.yaml, many_epochs.yaml etc.)
+It is an efficient way to deal with multiple experiments without having to modify the code. We also experimented with different hyperparameters running the training file as <code>python src/train_model.py model model.lr=1e-6 model.epochs=20</code> thus easily overriding the values specified in the .yaml, while still tracked in wandb. 
 
 
 ### Question 13
@@ -441,22 +441,15 @@ The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall
 >
 > Answer:
 
-We have a ``dockerfiles/`` directory in the root with the images that can be built and run. To build all the container applications, the command:
+We containerized all relevant code for training and evaluating a model into a single Docker image. The image can be locally built such as:
+<code>docker build -f Dockerfile . -t trainer:latest</code>
+And the image can then be run as:
+<code>docker run --name train_instance trainer:latest</code>
 
-``docker-compose build`` 
+We created a second Docker image for deployment containng code for loading the trained model from the GCcloud storage bucket and performing predictions with it through deployment of the FastAPI application.
 
-can be executed and runs the instructions in each yaml file in the directory. However, in most cases one is only interested in building a specific image. If it is for example desired to create the image to train the model one can execute:  
-
-``docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest``.  
-
-Afterwards the following command is executed to create and start a new container based on the created image above:  
-
-``docker run –name train_instance trainer:latest``  
-
-The dockerfiles have an entry point:
-
-``docker run -it –entrypoint sh trainer:latest ``
-
+We have a ``dockerfiles/`` directory in the root containing the image for deployment (fastapi.dockerfile). 
+The training-related dockerfile is located in the root named "Dockerfile". Preferably, this should be moved to the ``dockerfiles/`` directory. 
 
 ### Question 16
 
@@ -470,12 +463,11 @@ The dockerfiles have an entry point:
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+We strived to implement proper logging in source code while writing it to easily identify where problems might occur. Most debugging was done using the VSCode built-in debugger. 
 
-The aim in our project is to get an understanding of the wide variety of tools in MLOps. The ML problem (data loading/training/evaluation/prediction etc.) is secondary and is not the focus of the project. Therefore, the codebase is relatively small compared to the complexity of the tools employed. Most of the code was written while the unit tests were designed. At that stage both the code being tested, and the testing code could fail and it would typically be sufficient to see the error messages returned by python. The errors were fairly straight forward to spot. 
+However, the codebase is relatively small compared to the complexity of the tools employed. Most of the code was written while the unit tests were designed. At that stage both the code being tested, and the testing code could fail and it would typically be sufficient to see the error messages returned by Python. The errors were fairly straight forward to spot. 
 
 The majority of the errors encountered while running the experiments were due to issues with the necessary credentials so the different service could interact with each other. In the ideal case some unit tests and integration tests should have been designed to address those types of errors, but we found it to be more valuable to invest the time in the remaining of the MLOps workflow.
-
-
 
 
 ## Working in the cloud
