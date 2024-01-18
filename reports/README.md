@@ -432,7 +432,23 @@ The ``epoch`` increases gradually as expected. ``val_accuracy`` gives an overall
 >
 > Answer:
 
---- question 15 fill here ---
+We have a ``dockerfiles/`` directory in the root with the images that can be built and run. To build all the container applications the command:  
+
+``docker-compose build`` 
+
+can be executed and executes the instructions in each yaml file in the directory. However, in most cases one is only interested in building a specific image. If it is for example desired to create the image to train the model one can execute:  
+
+``docker build -f dockerfiles/train_model.dockerfile . -t trainer:latest``.  
+
+Afterwards the following command is executed to create and start a new container based on the created image above:  
+
+``docker run –name train_instance trainer:latest``  
+
+The dockerfiles have an entry point
+docker run -it –entrypoint sh trainer:latest 
+
+
+
 
 ### Question 16
 
@@ -611,10 +627,10 @@ Having overcome the initial challenges, the biggest challenges encountered in th
 >
 > Answer:
 
-Student s135313 was in charge of dealing with the Google Cloud Services and model training.
-Student s151988 was in charge of the FastAPI and writing the documentation.
-Student s230284 was in charge of dealing with the Google Cloud Services and model training.
-Student s183558 was in charge of dealing with pytests, the Google Cloud Services and model training.
+Student s135313 was in charge of {you are welcome to write the contributions}.
+Student s151988 was in charge of {the FastAPI for predictions, its containarization and writing the documentation}.
+Student s230284 was in charge of {you are welcome to write the contributions}.
+Student s183558 was in charge of {you are welcome to write the contributions}.
 
 Moreover all the members contributed with the general workflow, setting up the different configurations such as dockerfiles.
 
