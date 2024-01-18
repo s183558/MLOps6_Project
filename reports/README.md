@@ -214,7 +214,7 @@ The structure above was the starting point of our project, being the most releva
 >
 > Answer:
 
-We did not implement any rules for code quality, although we did install ``ruff`` which helps to comply with PEP8 guidelines. We attempted to do typehinting in most of our code, but in general we didnt use any 3rd. party code quality checkers as the code quality in the team was reasonably good. However for larger projects it is of course recommended to enforce some code quality rules, as not everyone in a large team will have a good code structure. In practice is not that important which set of rules are enforced (as long as they are reasonable and consistent). The most important is that having a set of rules ensures consistency and it is easier for the members to understand eachothers code.
+We didn't implement any rules for code quality, although we installed ``ruff``, helping to comply with PEP8 guidelines. We attempted to do typehinting in most of our code, but in general we didn't use any 3rd. party code quality checkers as the code quality in the team was reasonably good. However for larger projects it is naturally recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). A set of rules ensures consistency and it is easier for the members to understand eachothers code.
 
 
 ## Version control
@@ -600,7 +600,14 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 25 fill here ---
+![Architecture](figures/architecture.drawio.png)
+
+The diagram above shows gives an overview of the MLOps architecture we implemented in the project.  
+
+The process starts in the <b><span style="color:blue;">development</span></b> phase, where the developer <b><span style="color:blue;">commits</span></b> code changes to the <b><span style="color:blue;">Github</span></b> repository. This action triggers <b><span style="color:blue;">Github Actions</span></b>, which are configured to run the <b><span style="color:blue;">unit tests</span></b>, going through various checks of the code. Parallel to that activity, the changes in the repository activate a <b><span style="color:blue;">Google Cloud Build Trigger</span></b>. This trigger is responsible for building a <b><span style="color:blue;">training docker</span></b> image with all the required dependencies and credentials/<b><span style="color:blue;">secrets</span></b>. The <b><span style="color:blue;">training docker</span></b> is designed for training the classification model. Furthermode an <b><span style="color:blue;">application docker</span></b> image is also built, used to make predictions.  
+
+In the <b><span style="color:blue;">Virtual Machine</span></b> running in  <b><span style="color:blue;">Google Cloud</span></b> the docker image is pulled and a container is created that trains the model with data retrieved from <b><span style="color:blue;">Google's bucket/data</span></b>. The <b><span style="color:blue;">training docker</span></b> is linked to a service running in <b><span style="color:blue;">W&S</span></b> which is in charge of logging information (such as metrics and hyperparameters) relevant for the performance analysis, comparison and tracking of the trained models. A model of choice is then saved in <b><span style="color:blue;">Google's bucket/models</span></b> which is in the deployment phase loaded by the <b><span style="color:blue;">application docker</span></b> container running in <b><span style="color:blue;">Cloud Run</span></b>. The entry point of <b><span style="color:blue;">application docker</span></b> is set to run the FastAPI and a web GUI can be accessed at the exponsed <b><span style="color:blue;">URL://endpoint</span></b>. In there Twitter messages can be entered and the model predicts whether they can be considered as catastrophe or not.
+
 
 ### Question 26
 

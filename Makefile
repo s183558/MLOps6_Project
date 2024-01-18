@@ -38,10 +38,10 @@ clean:
 
 ## Process raw data into processed data 
 load_data:
-	python $(PROJECT_NAME)/data/make_dataset.py
+	python $(PROJECT_NAME)/data/load_data.py
 
 load_models:
-	python $(PROJECT_NAME)/data/make_dataset.py models
+	python $(PROJECT_NAME)/load_models.py
 
 ## Process raw data into processed data
 train:
