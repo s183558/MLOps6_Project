@@ -36,10 +36,12 @@ clean:
 # PROJECT RULES                                                                 #
 #################################################################################
 
-## Process raw data into processed data
-data:
+## Process raw data into processed data 
+load_data:
 	python $(PROJECT_NAME)/data/make_dataset.py
 
+load_models:
+	python $(PROJECT_NAME)/data/make_dataset.py models
 
 ## Process raw data into processed data
 train:
