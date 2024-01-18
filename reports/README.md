@@ -303,7 +303,9 @@ We agreed in the group at the beginning of the project to consider the 'main' br
 >
 > Answer:
 
-We used DVC to manage the raw training data (not the processed data) and the models. It helped us in a practical way allowing us to separate the code (versioned with git in a GitHub repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However, if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
+Initially, we used DVC to manage the raw training data (not the processed data) and the trained models. It helped us in a practical way allowing us to separate the code (versioned with git in a GitHub repo, which only allows versioning relatively small files) from the data (versioned with DVC in the Google Storage). However, if the model was deployed in a production environment, then with time the model would need to be retrained with an updated dataset. In that case it would allow us to harness the full potential of data/model versioning where we could examine the performance of different models with different datasets.
+Due to authentication issues, we stopped using DVC and loaded the data directly from the Google Cloud storage bucket. While not as streamlined as DVC it’s possible to restore previous file versions. It would be preferable to use DVC in cases, where we would want to use several different versions of datasets/models. 
+
 
 ### Question 11
 
@@ -655,13 +657,11 @@ In the <b><span style="color:blue;">Virtual Machine</span></b> running in  <b><s
 >
 > Answer:
 
-The initial challenge we had at the beginning was that all the group members should be able to run the code locally with the same results. It was quickly solved once the conda environment was set up correctly where the list of requirements was continuously updated locally and remotely.
+After making sure that all group members had functional environments and OS-based dependencies installed properly, we began working on processing data, building a model and a training process. Due to parallelization of the workload, we ended up having overlap in code between our branches. Thus, we wasted a bit of time which may have been avoided if we settled earlier on what third party packages to use and to what extent. We ended up structuring data processing using Lightning PyTorch data module and training code in the Lightning trainer.  
+It was time consuming and problematic moving from the local environment to Google Cloud, initially with granting the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'wandb', 'dvc', docker containers and Github. We ended up discarding dvc and loading data directly from the Google Cloud bucket and saving trained models in wandb to select the best performing model and upload it back to the Cloud bucket models directory.
+We initially wanted to use the Vertex AI API for GPU-enabled training but due to quota issues (still pending 5 days later) we used a VM instance instead. However, getting to create an appropriate GPU-enabled VM was non-trivial despite being a simple task. It took a lot of trial and error to find an available resource where the desired deep learning base image also worked. For some reason, the Nvidia driver installation failed on non-Europe zone machines while seemingly only few T4 GPU’s were available in the European zone. Further, it’s necessary to complete the instance creation before being notified if the requested machine is available or not. 
+Figuring out how to best authenticate the docker container running in the VM to both access the Google Cloud bucket and wandb also was a bit time-consuming, especially when testing changes that required a new Docker build. We did end up with a good solution, that doesn’t expose any secret API keys.
 
-Having overcome the initial challenges, the biggest challenges encountered in the project were:
-
-- Writing the code to train (finetune) the language model ``AlbertForSequenceClassification`` available from Hugging Face <img src="figures/hf-logo.png" width="25" height="25" style="vertical-align: middle;">. A solution was found by discussing the issues between the group members and by finding examples on the internet, especially at [Hugging Face documentation](https://huggingface.co/docs) 
-
-- Another challenge that followed us during the project was being able to grant the necessary credentials and permissions to allow the different tools to interchange data. More specifically it was the communication between 'WandB', 'DVC', Docker containers and virtual machines. We were not able to find a golden set of rules to solve the issues. The procedure relied on a good portion of trial & error approach. Google Cloud has a large number of tools/menus and parameters to set. An apparently simple task as setting up a VM in which a docker image is executed involved many trials and once the solution was found it seemed somewhat logic but without previous experience finding the correct solution was not obvious. As a side note, we requested a quota increase for Vertex AI API, but we did not get an approval on time. Hence, we end up using Compute Engine service as a solution. 
 
 
 
