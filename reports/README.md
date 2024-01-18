@@ -81,7 +81,7 @@ end of the project.
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -132,7 +132,7 @@ s135313, s151988, s230284, s183558
 
 We used multiple third-party framekworks. To name a few:
 
-- <b>wandb</b>: to track the training of the model, especifically we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
+- <b>wandb</b>: to track the training of the model, we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
 - <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator.
 - <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
 - <b>FastAPI</b>: a fast way to build an API (with a simple web based GUI) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded with a decorator serving as the interface to FastAPI.
