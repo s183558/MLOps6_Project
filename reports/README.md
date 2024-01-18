@@ -483,7 +483,14 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 17 fill here ---
+- <b>Compute Engine</b>: It allows us to run a virtual machine in which we can e.g. run a Docker container to train the model.
+
+- <b>Cloud Storage</b>:  A place in the cloud where we can access (read/write) large files. They can be the datasets for training and models for predictions.
+
+- <b>Vertex AI</b>: A service which can be used for ML training and deployment.
+
+- <b>Cloud Run</b>: It can be considered as a simpler version of Kubernetes for container orchestration.
+
 
 ### Question 18
 
