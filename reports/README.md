@@ -133,9 +133,9 @@ s135313, s151988, s230284, s183558
 We used multiple third-party framekworks. To name a few:
 
 - <b>wandb</b>: to track the training of the model, we used ``log_hyperparams()`` to log the configuration, ``watch()`` to log the gradients of the model and ``log_metrics()`` to log different metrics.
-- <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator.
+- <b>hydra</b>: to easier set up the configuration parameters and decouple the code from the configurations. The parameter sets are stored in ``*.yml`` files and accessed by ``train_main()`` as a dictionary using the hydra decorator. Furthermore the hydra configurations were used for data processing.
 - <b>Pytorch lightning</b>: to significantly reduced the amount of boilerplate code. As an example, after loading the parameters and instantiating a ``Trainer()`` object, the training amount to two lines: ``trainer.fit(<model>, <data>)`` and ``trainer.test(<model>, <data>)``
-- <b>FastAPI</b>: a fast way to build an API (with a simple web based GUI) that in our case allows to enter sentences to make model predictions. The function to be executed is preceded with a decorator serving as the interface to FastAPI.
+- <b>FastAPI</b>: a fast way to build an API (where we get simple web based GUI for free) that in our case allows to enter sentences to make model predictions. The function to be executed is preceeded with a decorator serving as the interface to FastAPI. Additionally there is a function which allows the user to update the model by fetching it from Google Bucket.
 
 
 ## Coding environment
@@ -155,7 +155,9 @@ We used multiple third-party framekworks. To name a few:
 >
 > Answer:
 
-We used conda to manage the dependecies of the project. To be able to replicate the results of our project the following four steps are necessary.
+We set up virtual environments using Anaconda/Mamba and installed dependencies from requirements.txt using Make file command ``make requirements``. We manually kept track of the requirements.txt file.
+
+To get a complete copy of the environment required for developing, one could run "make requirements" inside any virtual environment after cloning the project. Here is an example based on conda but any other environment manager can be used:
 
 - ``git clone git@github.com:s183558/MLOps6_Project.git .``: to clone our github project.
 
@@ -203,6 +205,10 @@ The structure above was the starting point of our project, being the most releva
 -  <b>``models/``</b>:  contains the generated trained models (bookkept by Pytorch Lightning).  
 -  <b>``src/``</b>:  contains the source code of the project.  
 -  <b>``tests/``</b>:  contains the unittests for the project.  
+
+In addition to the structure provided by cookiecutter we added the following folders:
+-  <b>``app/``</b>: contains the FastAPI.  
+-  <b>``conf/``</b>: contains the configuration 
 
 
 ### Question 6
@@ -534,7 +540,7 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 21 fill here ---
+![q21](figures/q21.png)
 
 ### Question 22
 
