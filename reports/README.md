@@ -514,7 +514,9 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 19 fill here ---
+![q19a](figures/q19a.png)
+
+![q19c](figures/q19c.png)
 
 ### Question 20
 
