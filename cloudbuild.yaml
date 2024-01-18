@@ -10,8 +10,8 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/mlops6-410910/testing']
 
-  # Build and Push App
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/mlops6-410910/app', '-f', './dockerfiles/fastapi.dockerfile', '.']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/mlops6-410910/app']
+  # # Build and Push App
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 'gcr.io/mlops6-410910/app', '-f', './dockerfiles/fastapi.dockerfile', '.']
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push', 'gcr.io/mlops6-410910/app']
