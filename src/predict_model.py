@@ -7,7 +7,7 @@ from pathlib import Path
 from transformers import AutoTokenizer
 from pytorch_lightning import Trainer
 
-def predict(data, which_model : str = "best"):
+def predict(data : [str], which_model : str = "best") -> torch.Tensor:
     
     # get model
     if which_model == "random":
@@ -16,15 +16,15 @@ def predict(data, which_model : str = "best"):
     
     elif which_model == "best":
         # Find the best_model file in the folder
-        model_dir = 'models/best_model/'
+        model_dir = 'models/best_model/model.ckpt'
 
-        # Find the file names in the folder (there should always be only 1 in this folder)
-        file_list = []
-        for _, _, files in os.walk(model_dir):
-            file_list = files
+        # # Find the file names in the folder (there should always be only 1 in this folder)
+        # file_list = []
+        # for _, _, files in os.walk(model_dir):
+        #     file_list = files
 
         # Create the model from the best model file
-        model = AlbertClassifier.load_from_checkpoint(file_list[0])
+        model = AlbertClassifier.load_from_checkpoint(model_dir)
 
     elif which_model == "latest":
         # Find the latest file in the folder
