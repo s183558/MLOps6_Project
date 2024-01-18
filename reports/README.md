@@ -366,11 +366,12 @@ def train_main(cfg:DictConfig):
 
     # Model
     learning_rate = cfg.model["lr"]
-    optimizer = cfg.model["optimizer"]
+    epochs = cfg.model["epochs"]
 
     [...]
 </code>
-The decorator fetches the configuration yaml file where the parameters are specified. Then in the body of ``train_main`` the parameters are available via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``optimizer``. It is an efficient way to deal with multiple experiments without having to modify the code.
+The decorator fetches the main configuration yaml file where the data and model configuration filenames were specified (e.g. default.yaml, many_epochs.yaml etc.). Then in the body of e.g. ``train_main`` the parameters are available via the ``DictConfig`` object, which in this case is the ``learning_rate`` and ``epochs``. 
+It is an efficient way to deal with multiple experiments without having to modify the code if we run Hydra. We also experimented with different hyperparameters running the training file as <code>python src/train_model.py model model.lr=1e-6 model.epochs=20</code> thus easily overriding the values specified in the .yaml, while still tracked in wandb. 
 
 
 ### Question 13
