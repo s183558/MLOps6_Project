@@ -448,8 +448,6 @@ The dockerfiles have an entry point
 docker run -it –entrypoint sh trainer:latest 
 
 
-
-
 ### Question 16
 
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
@@ -463,7 +461,12 @@ docker run -it –entrypoint sh trainer:latest
 >
 > Answer:
 
---- question 16 fill here ---
+The aim in our project is to get an understanding of the wide variety of tools in MLOps. The ML problem (data loading/training/evaluation/prediction etc.) is secondary and is not the focus of the project. Therefore the codebase is relatively small compared to the complexity of the tools employed. Most of the code was written while the unittests were designed. At that stage both the code being tested and the testing code could fail and it would typically be sufficient to see the error messages returned by python. The errors were fairly straight forward to spot. 
+
+The majority of the errors encountered while running the experiments were due to issues with the necessary credentials so the different service could interact with each other. In the ideal case some unittests and integration tests should have been designed to address those types of errors but we found it to be more valuable to invest the time in the remaining of the MLOps workflow.
+
+
+
 
 ## Working in the cloud
 
