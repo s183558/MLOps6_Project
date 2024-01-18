@@ -525,7 +525,7 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 20 fill here ---
+![q20](figures/q20.png)
 
 ### Question 21
 
