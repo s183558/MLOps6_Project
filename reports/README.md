@@ -565,7 +565,8 @@ The majority of the errors encountered while running the experiments were due to
 >
 > Answer:
 
---- question 23 fill here ---
+We sadly did not manage to implement monitoring. 
+First and foremost it would be nice to see how many people are actually using our application, to figure out the demand of the model, coming from a business point of view. But from a technical point of view, it would be nice to see if the hardware, which the application runs on, is actually holding up to the demand/traffic it recieves. It would also be nice to see how fast the application actually serves the user, as we all nowadays have a short attention span, which means we don't wan't to wait long for the answer provided by our application.
 
 ### Question 24
 
