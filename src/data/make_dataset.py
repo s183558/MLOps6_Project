@@ -39,13 +39,8 @@ def load_bucket(folder: str):
 def preprocess_data(file, store=False) -> pd.DataFrame:
     project_directory = get_project_dir()
 
-    # Create raw directory(for git)
-    raw_dir = os.path.join(project_directory, "data/raw")
-
     # Load Bucket
-    data_content = os.listdir(raw_dir)
-    if data_content == []:
-        load_bucket("data")
+    load_bucket("data")
 
     # Get Data
     data_path  = f"{project_directory}/data/raw/"
@@ -71,5 +66,5 @@ def load_train_df(file: str) -> pd.DataFrame:
 
 
 if __name__=="__main__":
-    bucket_folder = sys.argv[1]
-    load_bucket(bucket_folder)
+
+    preprocess_data("data_raw_train", store=True)

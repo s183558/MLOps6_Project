@@ -198,3 +198,15 @@ wandb
 
 # Gouugle Cloud Auth
 sa_key.json
+
+# ignore content of data folder but keep folder
+/data/raw/
+!/data/raw/.gitkeep
+/data/processed/
+!/data/processed/.gitkeep
+
+# ignore content of models folder but keep folder
+/models/lightning_logs/
+/models/lightning_logs/.gitkeep
+/models/best_model/
+/models/best_model/.gitkeep
