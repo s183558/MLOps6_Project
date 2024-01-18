@@ -384,20 +384,13 @@ The decorator fetches the configuration yaml file where the parameters are speci
 >
 > Answer:
 
-In order to reproduce the experiments, we made use of Hydra as described in the previous question. The workflow to run an experiment is the following:  
+In order to reproduce the experiments, we made use of Hydra as described in the previous question as well as WandB. The workflow to run an experiment is the following:  
 
-  1) It is assumed that the conda environment is activated and that all the necessary dependencies are installed.  
-  2) The parameter values in the config file are set up.  
-  3) An experiment is run with ``make train`` (where the model is trained with the specified parameters).  
-  4) The model is saved in Google Storage using DVC together with the corresponding commit (that also includes the configuration file):  
-    
-    git pull (to avoid possible conflicts)
-    dvc add models/
-    git add models.dvc .gitignore
-    git add config.yaml
-    git commit -m "Experiment X"
-    dvc push
-    git push    
+  1) The necessary dependencies were installed on the virtual machine from Gcloud, or locally if an experiment was done locally.  
+  2) The default parameter values in the config file were set up.  
+  3) An experiment with the default hyperparameters is run with ``python3 src/train_model.py``, or ``python3 src/train_model.py <hyperparameter_A>=x <hyperparameter_B>=y`` if some hyperparameters should be changed for expermiental sake.
+  4) The runs is being logged with WandB.
+  5) If the result of the test corresponded to a better model than previously achieved, we would manually go into WandB and download the checkpoint and place it in the "best_model" folder in our Gcloud bucket.
 
 
 ### Question 14
