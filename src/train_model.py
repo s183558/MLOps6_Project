@@ -17,6 +17,7 @@ from omegaconf import DictConfig
 
 @hydra.main(version_base=None, config_path="../conf", config_name="config.yaml")
 def train_main(cfg:DictConfig):
+    # TODO: I believe that this is dependent on device (GPU or CPU)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     # Specify tokenizer
@@ -86,5 +87,3 @@ def data_testing(cfg:DictConfig):
 
 if __name__ == '__main__':
     train_main()
-    #data_testing()
-    
