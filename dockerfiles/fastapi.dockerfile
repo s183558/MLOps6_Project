@@ -22,7 +22,7 @@ COPY sa_key.json sa_key.json
 ENV GOOGLE_APPLICATION_CREDENTIALS=sa_key.json
 
 # Fetch models
-RUN python src/load_models
+RUN python src/load_models.py
 
 WORKDIR /fastapi_proj/app
 
