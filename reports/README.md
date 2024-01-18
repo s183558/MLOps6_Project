@@ -202,7 +202,7 @@ The structure above was the starting point of our project, being the most releva
 -  <b>``data/``</b>: contains the .dvc pointers to the google storage to access the data.  
 -  <b>``models/``</b>:  contains the generated trained models (bookkept by Pytorch Lightning).  
 -  <b>``src/``</b>:  contains the source code of the project.  
--  <b>``tests/``</b>:  contains the tests to be executed.  
+-  <b>``tests/``</b>:  contains the unittests for the project.  
 
 
 ### Question 6
@@ -214,7 +214,7 @@ The structure above was the starting point of our project, being the most releva
 >
 > Answer:
 
-We did not implement any rules for code quality, although we installed for example ``ruff`` which helps to comply with PEP8 guidelines. We considered that it was not that necessary for our project. However for larger projects it is recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). The most important is that having a set of rules ensures consistency and it is easier for the members to understand eachothers code.
+We did not implement any rules for code quality, although we did install ``ruff`` which helps to comply with PEP8 guidelines. We considered that it was not that necessary for our project. However for larger projects it is recommended to enforce some code quality rules. In practice is not that important which set of rules are enforced (as long as they are reasonable). The most important is that having a set of rules ensures consistency and it is easier for the members to understand eachothers code.
 
 
 ## Version control
