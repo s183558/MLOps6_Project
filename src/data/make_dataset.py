@@ -1,11 +1,9 @@
-import os
 import pandas as pd
+from src.utils.utils import load_bucket
+from src.utils.utils import get_project_dir
+
 import logging
 import src.common.log_config 
-import torch
-import sys
-from google.cloud import storage
-
 logger=logging.getLogger(__name__)
 
 def processing(df: pd.DataFrame) -> pd.DataFrame:
@@ -21,20 +19,6 @@ def processing(df: pd.DataFrame) -> pd.DataFrame:
     logger.debug(df.head(5))
 
     return df
-
-def get_project_dir() -> str:
-    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-def load_bucket(folder: str):
-    storage_client = storage.Client()
-    bucket = storage_client.bucket("mlops6_tweets")
-    blobs = bucket.list_blobs(prefix=folder)
-    project_dir = get_project_dir()
-    for blob in blobs:
-        local_path = os.path.join(project_dir, blob.name)
-        print(local_path)
-        os.makedirs(os.path.dirname(local_path), exist_ok=True)
-        blob.download_to_filename(local_path)
 
 def preprocess_data(file, store=False) -> pd.DataFrame:
     project_directory = get_project_dir()
@@ -64,7 +48,5 @@ def load_train_df(file: str) -> pd.DataFrame:
 
     return train_df
 
-
 if __name__=="__main__":
-
     preprocess_data("data_raw_train", store=True)
