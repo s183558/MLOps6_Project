@@ -7,8 +7,8 @@ RUN apt update && \
 WORKDIR /fastapi_proj
 
 # Copy only the requirements file, to CACHE the pip install step
-COPY app/requirements_fastapi.txt .
-RUN pip install --no-cache-dir --upgrade -r requirements_fastapi.txt
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY pyproject.toml .
 COPY app/ ./app/
