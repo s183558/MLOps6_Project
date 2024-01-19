@@ -453,6 +453,17 @@ The training-related dockerfile is located in the root named "Dockerfile". Prefe
 
 https://drive.google.com/drive/folders/17tL9N1S-9G-9jolGqtUh1o7XgM2_OP7K?usp=sharing
 
+Instruction to run the container:  
+1) Download tar file using the link above.  
+2) ``docker load -i <path to tar file>``  
+3a) ``docker run -it --entrypoint sh --gpus all  gcr.io/mlops6-410910/testing:latest``  
+3b) (``--gpu all`` only if on cuda-enabled system)   
+
+Then it should start colleting data and training afterwards.  
+
+<b>Note:</b> Since we didn't include the makefile in the dockerbuild, it can be tested by running:
+``python src/train_model.py``
+
 
 ### Question 16
 
