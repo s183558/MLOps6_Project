@@ -167,7 +167,8 @@ To get a complete copy of the environment required for developing, one could run
 
 - ``make dev_requirements``: to install all the dependencies (also the development dependencies) to be able to run the code.
 
-Furthermore, there are some credentials necessary to e.g. be able to pull the data from Google Storage using ``dvc pull``. 
+Furthermore, our setup currently depends on 2 API keys in root to authenticate with GCloud and WandB from inside the Docker container.
+Alternatively, one could authenticate conservatively if working locally. 
 
 
 ### Question 5
