@@ -696,7 +696,7 @@ Figuring out how to best authenticate the docker container running in the VM to 
 
 Student s135313 was in charge of data processing, training, implementing Hydra, managing GCloud, setup VM.  
 Student s151988 was in charge of {the FastAPI for predictions and its containarization}.  
-Student s230284 was in charge of {you are welcome to write the contributions}.  
+Student s230284 was in charge of implementing the model, gBuckets, VertexAi, Cloud Run, cloud dockers.  
 Student s183558 was in charge of setting up WandB, creating unit tests, and DVC.  
 
 Moreover all the members contributed with designing and creating the general workflow, create dockerfiles and writing the report.
