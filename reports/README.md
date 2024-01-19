@@ -440,18 +440,19 @@ In the experiments below, we have run the same model, but with different learnin
 > Answer:
 
 We containerized all relevant code for training and evaluating a model into a single Docker image. The image can be locally built such as:
+
 <code>docker build -f Dockerfile . -t trainer:latest</code>
-And the image can then be run as:
+
+The image can then be run as:
+
 <code>docker run --name train_instance trainer:latest</code>
 
-We created a second Docker image for deployment containng code for loading the trained model from the GCcloud storage bucket and performing predictions with it through deployment of the FastAPI application.
+We created a second Docker image for deployment, containng code for loading the trained model from the GCcloud storage bucket and performing predictions with it through deployment of the FastAPI application.
 
 We have a ``dockerfiles/`` directory in the root containing the image for deployment (fastapi.dockerfile). 
 The training-related dockerfile is located in the root named "Dockerfile". Preferably, this should be moved to the ``dockerfiles/`` directory. 
 
-<b>Link to the training docker image:</b> (If the PC has limited RAM, it is recommeded to run it in interactive mode to verify at least the directory structure)  
-
-https://drive.google.com/drive/folders/17tL9N1S-9G-9jolGqtUh1o7XgM2_OP7K?usp=sharing
+[<b>Link to the training docker image:</b>](https://drive.google.com/drive/folders/17tL9N1S-9G-9jolGqtUh1o7XgM2_OP7K?usp=sharing) (If the PC has limited RAM, it is recommeded to run it in interactive mode to verify at least the directory structure)  
 
 Instruction to run the container:  
 1) Download tar file using the link above.  
@@ -695,9 +696,9 @@ Figuring out how to best authenticate the docker container running in the VM to 
 > Answer:
 
 Student s135313 was in charge of data processing, training, implementing Hydra, managing GCloud, setup VM.  
-Student s151988 was in charge of {the FastAPI for predictions and its containarization}.  
+Student s151988 was in charge of the FastAPI for predictions and its containarization.  
 Student s230284 was in charge of implementing the model, gBuckets, VertexAi, Cloud Run, cloud dockers.  
-Student s183558 was in charge of setting up WandB, creating unit tests, and DVC.  
+Student s183558 was in charge of setting up WandB, creating unit tests, GitHub Actions and DVC.  
 
 Moreover all the members contributed with designing and creating the general workflow, create dockerfiles and writing the report.
 
