@@ -449,6 +449,11 @@ We created a second Docker image for deployment containng code for loading the t
 We have a ``dockerfiles/`` directory in the root containing the image for deployment (fastapi.dockerfile). 
 The training-related dockerfile is located in the root named "Dockerfile". Preferably, this should be moved to the ``dockerfiles/`` directory. 
 
+<b>Link to the training docker image:</b> (If the PC has limited RAM, it is recommeded to run it in interactive mode to verify at least the directory structure)  
+
+https://drive.google.com/drive/folders/17tL9N1S-9G-9jolGqtUh1o7XgM2_OP7K?usp=sharing
+
+
 ### Question 16
 
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
