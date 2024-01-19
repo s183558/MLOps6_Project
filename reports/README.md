@@ -207,9 +207,9 @@ The structure above was the starting point of our project, being the most releva
 -  <b>``src/``</b>:  contains the source code of the project.  
 -  <b>``tests/``</b>:  contains the unit tests for the project.  
 
-In addition to the structure provided by Cookiecutter we added the following folders:
--  <b>``app/``</b>: contains the FastAPI.  
--  <b>``conf/``</b>: contains the configuration.
+In addition to the structure provided by Cookiecutter we added the following folders:  
+-  <b>``app/``</b>: contains the FastAPI.   
+-  <b>``conf/``</b>: contains the configuration.  
 
 
 ### Question 6
@@ -570,11 +570,10 @@ Once the image is pulled, the corresponding container can be created and run wit
 On success, the generated web GUI can be assessed as shown below:
 
 <code>
-docker run --name predict_pepe -p 80:80 gcr.io/mlops6-410910/app:latest
-INFO:     Started server process [1]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
+INFO:     Started server process [1]  
+INFO:     Waiting for application startup.  
+INFO:     Application startup complete.  
+INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)  
 </code>
 
 
