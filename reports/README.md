@@ -628,7 +628,7 @@ First and foremost, it would be nice to see how many people are actually using o
 >
 > Answer:
 
-We ended up using only roughly $4.0. Most of which was spend on Cloud Storage, and secondly running the VM. However, if we chose to attempt creating a well-performing model we would expect the GPU-training to increase cost considerably.
+We ended up using only roughly $10.0. Most of which was spend on Cloud Storage, and secondly running the VM. However, if we chose to attempt creating a well-performing model we would expect the GPU-training to increase cost considerably.
 
 ## Overall discussion of project
 
