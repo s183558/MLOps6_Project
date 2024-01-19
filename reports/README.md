@@ -678,10 +678,10 @@ Figuring out how to best authenticate the docker container running in the VM to 
 >
 > Answer:
 
-Student s135313 was in charge of {you are welcome to write the contributions}.
-Student s151988 was in charge of {the FastAPI for predictions, its containarization and writing the documentation}.
-Student s230284 was in charge of {you are welcome to write the contributions}.
-Student s183558 was in charge of {you are welcome to write the contributions}.
+Student s135313 was in charge of {you are welcome to write the contributions}.  
+Student s151988 was in charge of {the FastAPI for predictions and its containarization}.  
+Student s230284 was in charge of {you are welcome to write the contributions}.  
+Student s183558 was in charge of {you are welcome to write the contributions}.  
 
-Moreover all the members contributed with the general workflow, setting up the different configurations such as dockerfiles.
+Moreover all the members contributed with the general workflow, setting up the different configurations such as dockerfiles and writing the report.
 
